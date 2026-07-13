@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Daily Dispatch — 13 July 2026</title>
+<title>The Daily Dispatch — 14 July 2026</title>
 <style>
   :root{
     color-scheme: light;
@@ -88,33 +88,33 @@
   <header class="mast">
     <div class="kick"><span>Personalised Edition</span><span>Melbourne</span></div>
     <h1>The Daily Dispatch</h1>
-    <div class="sub">Monday, 13 July 2026 · tuned to your interests</div>
+    <div class="sub">Tuesday, 14 July 2026 · tuned to your interests</div>
   </header>
 
-  <p class="greet">Good morning, <b>Jacko</b>. AI's busy — OpenAI ships a work tier and MCP hardens for enterprise. Plus a live Alinta gas deal and a soft day on the ASX.</p>
+  <p class="greet">Good morning, <b>Jacko</b>. MCP is about to go stateless, Claude opens memory to everyone, and the ASX eyes a higher open as oil spikes on the Hormuz standoff. Alinta's WA gas is locked in.</p>
 
   <section class="snippet">
     <div class="lbl">Daily Technical Snippet</div>
-    <h2>What is MCP (Model Context Protocol)?</h2>
-    <p>MCP is an open standard that lets AI models connect to external tools and data through one consistent interface — think "USB-C for AI." Instead of building a bespoke integration per app, a model speaks MCP to any compliant server. It's the plumbing behind how Kepler can feed context into ChatGPT or Claude.</p>
+    <h2>What are vector embeddings?</h2>
+    <p>A vector embedding turns a piece of text (or an image, or a URL's contents) into a list of numbers that captures its meaning, so "similar" things sit close together in a high-dimensional space. It's the trick that lets a system retrieve the right note by <i>meaning</i> rather than exact keyword — the backbone of every AI memory or "second brain" product, Kepler included.</p>
     <details>
       <summary>Learn more</summary>
-      <p>An MCP <b>server</b> exposes capabilities (tools it can run, resources it can read, prompts it can offer) over a defined protocol; an MCP <b>client</b> — usually inside the AI app — discovers and calls them. Because the contract is standardised, one MCP server works across every client that speaks MCP, so integrations compose instead of multiplying. Today's news that MCP's Enterprise-Managed Auth reached stable matters because it adds the identity/permission layer companies need before wiring internal data into agents.</p>
-      <p><a href="https://www.anthropic.com/news/model-context-protocol" onclick="return openLink(this)">→ Read Anthropic's MCP overview</a></p>
+      <p>An embedding <b>model</b> maps input to a fixed-length vector (say 768 or 1,536 dimensions). Because semantically related items land near each other, you can measure closeness with <b>cosine similarity</b> and pull the top matches fast using a <b>vector database</b> (FAISS, pgvector, Pinecone). This is what powers retrieval-augmented generation: instead of stuffing everything into the prompt, you embed the user's query, fetch the nearest stored chunks, and feed only those to the model. For a URL-first memory product, the quality of your chunking + embedding strategy <i>is</i> the product — it decides whether the right context surfaces when it matters.</p>
+      <p><a href="https://platform.openai.com/docs/guides/embeddings" onclick="return openLink(this)">→ OpenAI's guide to embeddings</a></p>
     </details>
   </section>
 
   <article class="hero">
     <div class="band">Top Story · AI &amp; Agents</div>
     <div class="body">
-      <h2>OpenAI launches ChatGPT Work as it broadens the GPT-5.6 rollout</h2>
-      <p>OpenAI introduced a workplace-focused ChatGPT tier alongside a wider GPT-5.6 release, pushing further into enterprise productivity and squeezing the "AI for teams" middle ground that many startups occupy.</p>
-      <div class="src"><span class="badge v">✓ Verified · 10 Jul</span> <span class="dot"></span> InfoWorld <span class="dot"></span> <a href="https://www.infoworld.com/article/4195478/openai-launches-chatgpt-work-as-it-broadens-gpt-5-6-rollout.html" onclick="return openLink(this)">Read source ↗</a></div>
+      <h2>MCP is going stateless: the 2026-07-28 release candidate lands, beta SDKs now shipping</h2>
+      <p>The next Model Context Protocol spec strips out the initialize handshake and session IDs so any request can hit any server instance — a big deal for horizontally scaled agents. Beta SDKs are already out ahead of the 28 July final; if Kepler exposes an MCP server, this changes the transport contract.</p>
+      <div class="src"><span class="badge v">✓ In focus · ships 28 Jul</span> <span class="dot"></span> Model Context Protocol Blog <span class="dot"></span> <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/" onclick="return openLink(this)">Read source ↗</a></div>
       <div class="actions">
         <span class="lbl">Tune tomorrow:</span>
         <button class="up" onclick="tog(this)">▲ More</button>
         <button class="down" onclick="tog(this)">▼ Less</button>
-        <button class="share" onclick="share('OpenAI launches ChatGPT Work','https://www.infoworld.com/article/4195478/openai-launches-chatgpt-work-as-it-broadens-gpt-5-6-rollout.html')">Share ↗</button>
+        <button class="share" onclick="share('MCP is going stateless: the 2026-07-28 release candidate','https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/')">Share ↗</button>
       </div>
     </div>
   </article>
@@ -122,99 +122,115 @@
   <div class="sec-title">AI &amp; Agents</div>
   <div class="grid">
     <div class="card">
-      <h3>MCP Enterprise-Managed Auth reaches stable</h3>
-      <p>The Model Context Protocol's enterprise auth layer is now stable, giving companies the identity and permission controls needed to safely connect internal data to agents.</p>
-      <div class="src"><span class="badge v">✓ 6 Jul</span> <span class="dot"></span> InfoQ <span class="dot"></span> <a href="https://www.infoq.com/news/2026/07/mcp-ema-enterprise-auth/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('MCP Enterprise-Managed Auth reaches stable','https://www.infoq.com/news/2026/07/mcp-ema-enterprise-auth/')">Share ↗</button></div>
+      <h3>What the stateless spec breaks for agent auth</h3>
+      <p>With sessions removed, the identity and permission model shifts: auth context now rides on every request rather than a sticky session. Worth reading before you wire agents into anything sensitive.</p>
+      <div class="src"><span class="badge v">✓ This week</span> <span class="dot"></span> WorkOS <span class="dot"></span> <a href="https://workos.com/blog/mcp-2026-spec-agent-authentication" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('What the stateless MCP spec breaks for agent auth','https://workos.com/blog/mcp-2026-spec-agent-authentication')">Share ↗</button></div>
     </div>
     <div class="card">
-      <h3>CrowdStrike flags five new AI prompt-injection threats</h3>
-      <p>New research details five prompt-injection attack patterns against AI agents — a reminder that agent security is now a first-class concern for anyone shipping AI features.</p>
-      <div class="src"><span class="badge v">✓ 10 Jul</span> <span class="dot"></span> InfoWorld <span class="dot"></span> <a href="https://www.infoworld.com/article/4195672/crowdstrike-identifies-five-new-ai-prompt-injection-threats.html" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('CrowdStrike flags five new AI prompt-injection threats','https://www.infoworld.com/article/4195672/crowdstrike-identifies-five-new-ai-prompt-injection-threats.html')">Share ↗</button></div>
+      <h3>Enterprise-ready MCP brings fresh security challenges</h3>
+      <p>As MCP matures into an enterprise standard, researchers warn the wider surface area — and its role as a fast-growing vector for agent hijacking — makes hardening non-optional. NSA guidance and new CVEs landed this month.</p>
+      <div class="src"><span class="badge v">✓ Jul</span> <span class="dot"></span> SecurityWeek <span class="dot"></span> <a href="https://www.securityweek.com/new-enterprise-ready-mcp-specification-brings-new-security-challenges/" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Enterprise-ready MCP brings fresh security challenges','https://www.securityweek.com/new-enterprise-ready-mcp-specification-brings-new-security-challenges/')">Share ↗</button></div>
     </div>
   </div>
 
   <div class="sec-title">Competitor &amp; Category Watch</div>
   <div class="grid">
     <div class="card">
-      <h3>Meta launches low-cost Muse Spark 1.1</h3>
-      <p>Meta released a cheaper model tier as enterprise AI spending comes under scrutiny — downward price pressure that reshapes the cost math for anyone building on top of frontier models.</p>
-      <div class="src"><span class="badge v">✓ 10 Jul</span> <span class="dot"></span> InfoWorld <span class="dot"></span> <a href="https://www.infoworld.com/article/4195519/meta-launches-low-cost-muse-spark-1-1-as-enterprise-ai-spending-comes-under-scrutiny.html" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Meta launches low-cost Muse Spark 1.1','https://www.infoworld.com/article/4195519/meta-launches-low-cost-muse-spark-1-1-as-enterprise-ai-spending-comes-under-scrutiny.html')">Share ↗</button></div>
+      <h3>Claude opens memory to every user — plus a monthly recap</h3>
+      <p>Anthropic made memory-from-chat-history free for all Claude tiers and added a "monthly recap" showing your top topics and work patterns. The memory layer Kepler sells is now table stakes inside the big assistants — differentiation has to move up the stack.</p>
+      <div class="src"><span class="badge v">✓ Jul</span> <span class="dot"></span> Yahoo Tech <span class="dot"></span> <a href="https://tech.yahoo.com/ai/claude/articles/claude-makes-ai-memory-feature-071303312.html" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Claude opens memory to every user','https://tech.yahoo.com/ai/claude/articles/claude-makes-ai-memory-feature-071303312.html')">Share ↗</button></div>
     </div>
     <div class="card">
-      <h3>Microsoft unveils Memora for agent memory</h3>
-      <p>Microsoft Research's Memora architecture tackles the AI-agent memory problem head-on — directly adjacent to Kepler's memory-layer thesis and worth tracking.</p>
-      <div class="src"><span class="badge c">Context · 30 Jun</span> <span class="dot"></span> InfoWorld <span class="dot"></span> <a href="https://www.infoworld.com/article/4191031/microsoft-unveils-memora-to-tackle-ai-agents-memory-problem.html" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Microsoft unveils Memora for agent memory','https://www.infoworld.com/article/4191031/microsoft-unveils-memora-to-tackle-ai-agents-memory-problem.html')">Share ↗</button></div>
+      <h3>ChatGPT ships granular memory controls</h3>
+      <p>OpenAI rolled out finer memory management — delete individual memories, edit the summary in natural language, or turn it off without wiping chats. The category is converging on user-controllable, editable memory.</p>
+      <div class="src"><span class="badge v">✓ Jul</span> <span class="dot"></span> Releasebot (OpenAI notes) <span class="dot"></span> <a href="https://releasebot.io/updates/openai/chatgpt" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('ChatGPT ships granular memory controls','https://releasebot.io/updates/openai/chatgpt')">Share ↗</button></div>
     </div>
   </div>
 
   <div class="sec-title">Startups &amp; Funding</div>
   <div class="grid">
     <div class="card">
-      <h3>Together AI raises $800M Series C at $8.3B</h3>
-      <p>The open-model cloud closed a large Series C, underscoring that AI infrastructure — not just apps — is still commanding premium valuations.</p>
-      <div class="src"><span class="badge v">✓ 1 Jul</span> <span class="dot"></span> Together AI <span class="dot"></span> <a href="https://www.together.ai/blog/announcing-our-series-c" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Together AI raises $800M Series C','https://www.together.ai/blog/announcing-our-series-c')">Share ↗</button></div>
+      <h3>Weekly AI raises: TwelveLabs, Even Realities, Zeroth</h3>
+      <p>This week's roundup: TwelveLabs closed $100M Series B for video-understanding AI, Even Realities took $150M for camera-free smart glasses, and Ant-backed Zeroth raised ~$74M for humanoid robotics. Capital keeps flowing to AI that meets the physical world.</p>
+      <div class="src"><span class="badge c">Context · 6 Jul</span> <span class="dot"></span> Tech Startups <span class="dot"></span> <a href="https://techstartups.com/2026/07/06/venture-capital-startup-funding-roundup-july-6-2026/" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Weekly AI raises: TwelveLabs, Even Realities, Zeroth','https://techstartups.com/2026/07/06/venture-capital-startup-funding-roundup-july-6-2026/')">Share ↗</button></div>
     </div>
     <div class="card">
-      <h3>Canva &amp; Atlassian alumni raise A$3.5M seed</h3>
-      <p>Ex-Canva and Atlassian operators closed a seed round for a product-management startup — a healthy signal for the Australian founder pipeline.</p>
-      <div class="src"><span class="badge v">✓ This week</span> <span class="dot"></span> Startup Daily <span class="dot"></span> <a href="https://www.startupdaily.net/topic/funding/canva-and-atlassian-alumni-raise-3-5-million-seed-round-for-their-product-management-startup/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Canva & Atlassian alumni raise A$3.5M seed','https://www.startupdaily.net/topic/funding/canva-and-atlassian-alumni-raise-3-5-million-seed-round-for-their-product-management-startup/')">Share ↗</button></div>
+      <h3>North American startup funding smashed records in H1, driven by AI</h3>
+      <p>Crunchbase data shows first-half 2026 venture funding hit record highs in North America, concentrated in AI — though the boom is notably <i>not</i> global. Useful backdrop for how competitively Kepler's raise environment reads.</p>
+      <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> Crunchbase News <span class="dot"></span> <a href="https://news.crunchbase.com/venture/na-startup-funding-ma-shattered-records-ai-q2-2026/" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('North American startup funding smashed records in H1','https://news.crunchbase.com/venture/na-startup-funding-ma-shattered-records-ai-q2-2026/')">Share ↗</button></div>
     </div>
   </div>
 
   <div class="sec-title">Australian Business &amp; Economy</div>
   <div class="grid">
     <div class="card">
-      <h3>ASX 200 slips ~1% as IMF trims growth outlook</h3>
-      <p>The index traded about 1% lower after the IMF cut its global growth forecast, though miners held up relatively well. Read as a cautious, risk-off session.</p>
-      <div class="src"><span class="badge v">✓ Today</span> <span class="dot"></span> Motley Fool AU <span class="dot"></span> <a href="https://www.fool.com.au/latest-asx-200-chart-price-news/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('ASX 200 slips as IMF trims growth outlook','https://www.fool.com.au/latest-asx-200-chart-price-news/')">Share ↗</button></div>
+      <h3>ASX set to open higher; oil jumps as Iran declares Hormuz "closed"</h3>
+      <p>ASX 200 futures pointed up ~0.5% to start the week after a second straight weekly Wall Street gain, but Brent spiked ~4.9% to US$78.90 as Iran declared the Strait of Hormuz closed over the weekend — a live risk for local energy and inflation.</p>
+      <div class="src"><span class="badge v">✓ 13 Jul</span> <span class="dot"></span> Market Index <span class="dot"></span> <a href="https://www.marketindex.com.au/news/asx-200-live-today-monday-13th-july" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('ASX set to open higher; oil jumps on Hormuz','https://www.marketindex.com.au/news/asx-200-live-today-monday-13th-july')">Share ↗</button></div>
     </div>
     <div class="card">
-      <h3>Growth &amp; Marketing: AI-content backlash as a conversion risk</h3>
-      <p>Trend reads this week flag rising audience fatigue with obviously AI-generated content, while short-form and social search increasingly own discovery — worth factoring into Kepler's content mix.</p>
-      <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> Sprout Social · Hootsuite <span class="dot"></span> <a href="https://sproutsocial.com/insights/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('AI-content backlash as a conversion risk','https://sproutsocial.com/insights/')">Share ↗</button></div>
+      <h3>GQG Partners bleeds US$3.2B of June outflows</h3>
+      <p>ASX-listed fund manager GQG reported US$3.2B of net outflows in June and US$15.1B for the half, dragging funds under management down to US$156B. A reminder that active-management flows stay under pressure.</p>
+      <div class="src"><span class="badge v">✓ 13 Jul</span> <span class="dot"></span> Market Index <span class="dot"></span> <a href="https://www.marketindex.com.au/news/asx-200-live-today-monday-13th-july" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('GQG Partners bleeds US$3.2B of June outflows','https://www.marketindex.com.au/news/asx-200-live-today-monday-13th-july')">Share ↗</button></div>
+    </div>
+  </div>
+
+  <div class="sec-title">Growth &amp; Marketing</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Zero-click is eating discovery — optimise for agents</h3>
+      <p>2026 content reads converge on one theme: audiences increasingly get answers inside AI Overviews, ChatGPT and social feeds without visiting your site, so LLMs and agentic marketplaces are becoming acquisition channels. For a URL-first product, being <i>discoverable by agents</i> is now a growth lever.</p>
+      <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> Mixpanel · Userpilot <span class="dot"></span> <a href="https://mixpanel.com/blog/product-led-growth/" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Zero-click is eating discovery — optimise for agents','https://mixpanel.com/blog/product-led-growth/')">Share ↗</button></div>
+    </div>
+    <div class="card">
+      <h3>PLG's measurement gap: 91% invest, ~34% track activation</h3>
+      <p>Benchmarks show most B2B SaaS runs a PLG motion and plans to spend more, yet only about a third actually track activation — where programs quietly leak value. Product-qualified leads still convert 3–5× better than MQLs.</p>
+      <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> Mixpanel <span class="dot"></span> <a href="https://mixpanel.com/blog/product-led-growth/" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('PLG measurement gap: 91% invest, 34% track activation','https://mixpanel.com/blog/product-led-growth/')">Share ↗</button></div>
     </div>
   </div>
 
   <div class="sec-title">Energy &amp; Utilities · Alinta Watch</div>
   <div class="grid">
     <div class="card">
-      <h3>Chevron to keep supplying Alinta with 46 PJ of WA gas</h3>
-      <p>Chevron will continue supplying Alinta Energy with 46 petajoules of Western Australian gas, shoring up Alinta's WA supply. It follows Alinta's separate 30 PJ Scarborough/LNG-linked arrangement — steady vertical-supply positioning.</p>
-      <div class="src"><span class="badge v">✓ 10 Jul</span> <span class="dot"></span> Rigzone <span class="dot"></span> <a href="https://www.rigzone.com/news/chevron_to_continue_supplying_gas_to_australian_utility_alinta-10-jul-2026-184111-article/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Chevron to keep supplying Alinta with 46 PJ of WA gas','https://www.rigzone.com/news/chevron_to_continue_supplying_gas_to_australian_utility_alinta-10-jul-2026-184111-article/')">Share ↗</button></div>
+      <h3>Chevron locks in 46 PJ of WA gas for Alinta</h3>
+      <p>Chevron signed a five-year deal to supply Alinta Energy 46 petajoules of Western Australian gas from July 2027, sourced across its Gorgon and North West Shelf projects — shoring up Alinta's WA generation supply. Still the freshest Alinta-specific item in the window.</p>
+      <div class="src"><span class="badge c">Context · ~10 Jul</span> <span class="dot"></span> Rigzone <span class="dot"></span> <a href="https://www.rigzone.com/news/chevron_to_continue_supplying_gas_to_australian_utility_alinta-10-jul-2026-184111-article/" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Chevron locks in 46 PJ of WA gas for Alinta','https://www.rigzone.com/news/chevron_to_continue_supplying_gas_to_australian_utility_alinta-10-jul-2026-184111-article/')">Share ↗</button></div>
     </div>
     <div class="card">
-      <h3>Retail price rises + Bowen probes supply charges</h3>
-      <p>New retail rules land as the energy minister scrutinises supply charges at AGL, Origin and EnergyAustralia — Alinta's big-three competitors — amid another round of July price moves.</p>
-      <div class="src"><span class="badge v">✓ Jul</span> <span class="dot"></span> Lenergy <span class="dot"></span> <a href="https://lenergy.com.au/are-agl-origin-energyaustralia-prices-going-up-july-2026/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Retail price rises and supply-charge probe','https://lenergy.com.au/are-agl-origin-energyaustralia-prices-going-up-july-2026/')">Share ↗</button></div>
+      <h3>A major new gas plant joins the federal approval queue</h3>
+      <p>One of Australia's biggest renewables developers has lodged plans for one of the country's largest new gas plants for federal environmental approval — a sign firming capacity remains the battleground for gentailers like Alinta, AGL and Origin.</p>
+      <div class="src"><span class="badge v">✓ 13 Jul</span> <span class="dot"></span> RenewEconomy <span class="dot"></span> <a href="https://reneweconomy.com.au/one-of-australias-biggest-renewables-developers-seeks-to-build-one-of-countrys-biggest-new-gas-plants/" onclick="return openLink(this)">Source ↗</a></div>
+      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('A major new gas plant joins the federal approval queue','https://reneweconomy.com.au/one-of-australias-biggest-renewables-developers-seeks-to-build-one-of-countrys-biggest-new-gas-plants/')">Share ↗</button></div>
     </div>
   </div>
 
   <div class="sec-title">Quick Hits</div>
   <ul class="hits">
-    <li><span class="tag">AI</span><span><b>ChatGPT Work</b> lands as OpenAI widens the GPT-5.6 rollout. <a href="https://www.infoworld.com/article/4195478/openai-launches-chatgpt-work-as-it-broadens-gpt-5-6-rollout.html" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Agents</span><span><b>MCP</b> Enterprise-Managed Auth is now stable. <a href="https://www.infoq.com/news/2026/07/mcp-ema-enterprise-auth/" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Funding</span><span><b>Together AI</b> raises $800M at an $8.3B valuation. <a href="https://www.together.ai/blog/announcing-our-series-c" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Markets</span><span><b>ASX 200</b> ~1% lower on the IMF growth cut. <a href="https://www.fool.com.au/latest-asx-200-chart-price-news/" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Energy</span><span><b>Alinta</b> secures 46 PJ of WA gas from Chevron. <a href="https://www.rigzone.com/news/chevron_to_continue_supplying_gas_to_australian_utility_alinta-10-jul-2026-184111-article/" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Security</span><span><b>CrowdStrike</b> details five new prompt-injection threats. <a href="https://www.infoworld.com/article/4195672/crowdstrike-identifies-five-new-ai-prompt-injection-threats.html" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Agents</span><span><b>MCP</b> goes stateless in the 2026-07-28 RC; beta SDKs are out. <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Competitor</span><span><b>Claude</b> makes chat-history memory free for all users. <a href="https://tech.yahoo.com/ai/claude/articles/claude-makes-ai-memory-feature-071303312.html" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Funding</span><span><b>TwelveLabs</b> raises $100M Series B for video-understanding AI. <a href="https://techstartups.com/2026/07/06/venture-capital-startup-funding-roundup-july-6-2026/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Markets</span><span><b>ASX 200</b> futures +0.5%; Brent spikes on Hormuz standoff. <a href="https://www.marketindex.com.au/news/asx-200-live-today-monday-13th-july" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Energy</span><span><b>Alinta</b> secures 46 PJ of WA gas from Chevron to 2032+. <a href="https://www.rigzone.com/news/chevron_to_continue_supplying_gas_to_australian_utility_alinta-10-jul-2026-184111-article/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Security</span><span><b>NSA + researchers</b> flag MCP as a rising agent-hijack vector. <a href="https://www.securityweek.com/new-enterprise-ready-mcp-specification-brings-new-security-challenges/" onclick="return openLink(this)">↗</a></span></li>
   </ul>
 
   <div class="foot">
     <p>👍 <b>More</b> / 👎 <b>Less</b> on any story and tomorrow's edition adjusts to what you rate. Or just tell me "more AI infra, less markets."</p>
-    <p style="font-size:12px;opacity:.85">Honesty note: it's Monday, so the genuinely fresh window is Fri 10 Jul → today. Items outside that are tagged <b>Context</b> or <b>Trend report</b> rather than presented as breaking.</p>
+    <p style="font-size:12px;opacity:.85">Honesty note: today's genuinely fresh window is Sun 12 → Tue 14 Jul. No breaking Alinta item landed inside 24–48h, so the Chevron gas deal (~10 Jul) is tagged <b>Context</b>; PLG/marketing items are <b>Trend reports</b>, not news.</p>
   </div>
 
-  <div class="stamp">The Daily Dispatch · first live edition<br>Every story cited &amp; recency-checked · stale items dropped or tagged</div>
+  <div class="stamp">The Daily Dispatch · Tuesday 14 July 2026<br>Every story cited &amp; recency-checked · stale items dropped or tagged</div>
 
 </div>
 <div id="toast">Link copied</div>
