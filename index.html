@@ -11,7 +11,7 @@
     --accent:#c8451f; --accent-soft:#f6e8e2; --up:#1f7a4d; --up-soft:#e4f2ea; --down:#9a5b12;
     --ctx:#7a6f12; --ctx-soft:#f3efd8; --dark:#141a24; --dark2:#1b2431;
     --serif:Georgia,"Times New Roman",serif; --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-    --tx:0; --ty:0; --px:0; --py:0;
+    --tx:0; --ty:0;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -58,12 +58,10 @@
   .face.back{position:absolute;top:0;left:0;width:100%;height:100%;background:var(--dark);color:#e7edf5;border:1px solid var(--dark2);transform:rotateY(180deg);padding:18px;justify-content:center;box-shadow:0 14px 30px -18px rgba(20,26,36,.7)}
 
   .cbody{padding:16px;display:flex;flex-direction:column;height:100%}
-  .fhead{font-family:var(--serif);font-weight:700;font-size:18.5px;line-height:1.18;margin-bottom:7px;
-         transform:translate3d(calc(var(--px)*1px),calc(var(--py)*1px),22px)}
+  .fhead{font-family:var(--serif);font-weight:700;font-size:18.5px;line-height:1.18;margin-bottom:7px}
   .cbody p{font-size:14px;color:#403c36;margin-bottom:10px;flex:1}
 
-  .src{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:11px;
-       transform:translate3d(calc(var(--px)*.5px),calc(var(--py)*.5px),12px)}
+  .src{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:11px}
   .src .dot{width:3px;height:3px;border-radius:50%;background:var(--muted);display:inline-block}
   .src a{color:var(--accent);text-decoration:none;font-weight:500}
   .badge{font-weight:600;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:20px}
@@ -440,7 +438,7 @@
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var root = document.documentElement;
     var tgt={x:0,y:0}, cur={x:0,y:0};
-    var MAXR=6.5, MAXT=9;            // max tilt (deg) and inner drift (px)
+    var MAXR=6.5;                    // max tilt (deg) — whole card tilts as one unit
     var running=false;
     function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
     function loop(){
@@ -448,8 +446,6 @@
       cur.y += (tgt.y-cur.y)*0.08;
       root.style.setProperty('--tx', (cur.x*MAXR).toFixed(3));
       root.style.setProperty('--ty', (-cur.y*MAXR).toFixed(3));
-      root.style.setProperty('--px', (cur.x*MAXT).toFixed(3));
-      root.style.setProperty('--py', (cur.y*MAXT).toFixed(3));
       requestAnimationFrame(loop);
     }
     function start(){ if(running||reduce) return; running=true; requestAnimationFrame(loop); }
