@@ -1,2 +1,3 @@
 What is MCP (Model Context Protocol)
 Vector embeddings
+Reranking (retrieve wide, rerank narrow)

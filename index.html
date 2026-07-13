@@ -9,8 +9,9 @@
     color-scheme: light;
     --ink:#1a1917; --paper:#faf8f4; --card:#ffffff; --muted:#6b665d; --line:#e6e1d8;
     --accent:#c8451f; --accent-soft:#f6e8e2; --up:#1f7a4d; --up-soft:#e4f2ea; --down:#9a5b12;
-    --ctx:#7a6f12; --ctx-soft:#f3efd8;
+    --ctx:#7a6f12; --ctx-soft:#f3efd8; --dark:#141a24; --dark2:#1b2431;
     --serif:Georgia,"Times New Roman",serif; --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --tx:0; --ty:0; --px:0; --py:0;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -19,10 +20,16 @@
   .mast .kick{display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
   .mast h1{font-family:var(--serif);font-weight:700;font-size:clamp(38px,7vw,60px);letter-spacing:-.01em;line-height:1;margin:10px 0 6px;text-align:center;font-style:italic}
   .mast .sub{text-align:center;font-size:13px;color:var(--muted);letter-spacing:.04em}
-  .greet{text-align:center;font-family:var(--serif);font-size:17px;color:var(--ink);margin:14px 0 22px}
+  .greet{text-align:center;font-family:var(--serif);font-size:17px;color:var(--ink);margin:14px 0 12px}
   .greet b{color:var(--accent)}
 
-  .snippet{background:#141a24;color:#eef2f7;border-radius:14px;padding:18px 20px;margin-bottom:22px}
+  .motion{display:flex;flex-direction:column;align-items:center;gap:6px;margin:0 0 20px}
+  #motionBtn{font-family:var(--sans);font-size:13px;font-weight:600;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);border-radius:22px;padding:8px 16px;cursor:pointer;transition:all .15s}
+  #motionBtn:hover{background:var(--accent);color:#fff}
+  #motionBtn.on{background:var(--up-soft);border-color:var(--up);color:var(--up)}
+  .hint{font-size:12px;color:var(--muted);text-align:center;letter-spacing:.01em}
+
+  .snippet{background:var(--dark);color:#eef2f7;border-radius:14px;padding:18px 20px;margin-bottom:22px}
   .snippet .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7fb0ff;font-weight:600;margin-bottom:8px}
   .snippet h2{font-family:var(--serif);font-size:22px;font-weight:700;margin-bottom:8px}
   .snippet p{font-size:14.5px;color:#cdd6e2;margin-bottom:8px}
@@ -34,34 +41,62 @@
   .snippet details p{margin-top:9px;color:#dbe3ee}
   .snippet a{color:#7fb0ff;text-decoration:none;font-weight:600}
 
-  .hero{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:20px}
-  .hero .band{background:var(--accent);color:#fff;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:7px 16px}
-  .hero .body{padding:20px}
-  .hero h2{font-family:var(--serif);font-weight:700;font-size:clamp(23px,4.2vw,31px);line-height:1.13;margin-bottom:10px}
-  .hero p{font-size:16px;color:#33302b;margin-bottom:14px}
+  /* ---- floating parallax stage ---- */
+  .herowrap{perspective:1100px;margin-bottom:20px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;perspective:1100px}
 
-  .src{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  .flip{position:relative;transform-style:preserve-3d;will-change:transform;
+        transform:rotateX(calc(var(--ty)*1deg)) rotateY(calc(var(--tx)*1deg));}
+  .flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.15,.2,1)}
+  .flip.flipped .flip-inner{transform:rotateY(180deg)}
+  /* front sits in normal flow and DEFINES the card height (no JS dependency);
+     back is absolutely overlaid; JS only bumps min-height when a back is taller. */
+  .face{display:flex;flex-direction:column;
+        -webkit-backface-visibility:hidden;backface-visibility:hidden;transform-style:preserve-3d;
+        border-radius:12px;overflow:hidden}
+  .face.front{position:relative;height:100%;background:var(--card);border:1px solid var(--line);box-shadow:0 10px 26px -18px rgba(40,30,15,.5)}
+  .face.back{position:absolute;top:0;left:0;width:100%;height:100%;background:var(--dark);color:#e7edf5;border:1px solid var(--dark2);transform:rotateY(180deg);padding:18px;justify-content:center;box-shadow:0 14px 30px -18px rgba(20,26,36,.7)}
+
+  .cbody{padding:16px;display:flex;flex-direction:column;height:100%}
+  .fhead{font-family:var(--serif);font-weight:700;font-size:18.5px;line-height:1.18;margin-bottom:7px;
+         transform:translate3d(calc(var(--px)*1px),calc(var(--py)*1px),22px)}
+  .cbody p{font-size:14px;color:#403c36;margin-bottom:10px;flex:1}
+
+  .src{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:11px;
+       transform:translate3d(calc(var(--px)*.5px),calc(var(--py)*.5px),12px)}
   .src .dot{width:3px;height:3px;border-radius:50%;background:var(--muted);display:inline-block}
   .src a{color:var(--accent);text-decoration:none;font-weight:500}
   .badge{font-weight:600;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:20px}
   .badge.v{background:var(--up-soft);color:var(--up)}
   .badge.c{background:var(--ctx-soft);color:var(--ctx)}
 
-  .sec-title{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin:26px 0 12px}
-  .sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
-
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column}
-  .card h3{font-family:var(--serif);font-weight:700;font-size:18.5px;line-height:1.18;margin-bottom:7px}
-  .card p{font-size:14px;color:#403c36;margin-bottom:10px;flex:1}
-
-  .actions{display:flex;gap:8px;align-items:center;border-top:1px dashed var(--line);padding-top:11px;margin-top:auto;flex-wrap:wrap}
+  .actions{display:flex;gap:7px;align-items:center;border-top:1px dashed var(--line);padding-top:11px;margin-top:auto;flex-wrap:wrap}
   .actions .lbl{font-size:11px;color:var(--muted);margin-right:auto;letter-spacing:.02em}
-  .actions button{font-family:var(--sans);font-size:12px;font-weight:500;border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:20px;padding:5px 11px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .12s}
+  .actions button{font-family:var(--sans);font-size:12px;font-weight:500;border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:20px;padding:5px 10px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:all .12s}
   .actions button:hover{border-color:var(--muted)}
   .actions button.up.on{background:var(--up-soft);border-color:var(--up);color:var(--up)}
   .actions button.down.on{background:var(--accent-soft);border-color:var(--down);color:var(--down)}
   .actions button.share{color:var(--accent);border-color:var(--accent-soft)}
+  .actions button.why{color:#fff;background:var(--accent);border-color:var(--accent);font-weight:600}
+  .actions button.why:hover{background:#a5381a}
+
+  .back .whytag{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7fb0ff;font-weight:700;margin-bottom:9px}
+  .back p{font-size:14px;line-height:1.5;color:#dbe3ee}
+  .back .backbtn{align-self:flex-start;margin-top:14px;font-family:var(--sans);font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.25);background:transparent;color:#9fc4ff;border-radius:20px;padding:6px 13px;cursor:pointer;transition:all .12s}
+  .back .backbtn:hover{border-color:#9fc4ff;background:rgba(127,176,255,.1)}
+
+  /* hero variant */
+  .flip.hero .fhead{font-size:clamp(23px,4.2vw,31px);line-height:1.13}
+  .flip.hero .cbody{padding:0}
+  .flip.hero .cbody p{font-size:16px;color:#33302b}
+  .flip.hero .inner-pad{padding:20px;display:flex;flex-direction:column;height:100%}
+  .band{background:var(--accent);color:#fff;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:7px 16px}
+  .flip.hero .back{padding:0}
+  .flip.hero .back .inner-pad{padding:22px;display:flex;flex-direction:column;height:100%;justify-content:center}
+  .hband{background:var(--dark2);color:#9fc4ff;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:7px 16px}
+
+  .sec-title{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px;margin:26px 0 12px}
+  .sec-title::after{content:"";flex:1;height:1px;background:var(--line)}
 
   .hits{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 18px}
   .hits li{list-style:none;padding:13px 0;border-bottom:1px solid var(--line);font-size:14.5px;display:flex;gap:12px;align-items:flex-start}
@@ -76,10 +111,15 @@
   .foot b{color:var(--accent)}
   .stamp{text-align:center;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:16px;line-height:1.9}
 
-  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;font-size:13px;padding:10px 18px;border-radius:24px;opacity:0;pointer-events:none;transition:all .2s}
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;font-size:13px;padding:10px 18px;border-radius:24px;opacity:0;pointer-events:none;transition:all .2s;z-index:50}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   @media(max-width:680px){ .grid{grid-template-columns:1fr} .page{padding:16px} }
+  @media (prefers-reduced-motion: reduce){
+    .flip{transform:none!important}
+    .fhead,.src{transform:none!important}
+    .flip-inner{transition:none}
+  }
 </style>
 </head>
 <body>
@@ -91,158 +131,366 @@
     <div class="sub">Tuesday, 14 July 2026 · tuned to your interests</div>
   </header>
 
-  <p class="greet">Good morning, <b>Jacko</b>. MCP is about to go stateless, Claude opens memory to everyone, and the ASX eyes a higher open as oil spikes on the Hormuz standoff. Alinta's WA gas is locked in.</p>
+  <p class="greet">Good morning, <b>Jacko</b>. GPT-5.6 clears its security review, Claude starts importing rivals' memories, and Alinta's new Singaporean owner is now official — with the ASX limping to a flat, tech-led-down close.</p>
+
+  <div class="motion">
+    <button id="motionBtn" onclick="enableMotion()">✨ Enable floating (motion)</button>
+    <div class="hint">Move your mouse and the cards float toward you. On a phone, tap Enable to steer them by tilt. Hit <b>Why it matters ⟳</b> on any card to flip it.</div>
+  </div>
 
   <section class="snippet">
     <div class="lbl">Daily Technical Snippet</div>
-    <h2>What are vector embeddings?</h2>
-    <p>A vector embedding turns a piece of text (or an image, or a URL's contents) into a list of numbers that captures its meaning, so "similar" things sit close together in a high-dimensional space. It's the trick that lets a system retrieve the right note by <i>meaning</i> rather than exact keyword — the backbone of every AI memory or "second brain" product, Kepler included.</p>
+    <h2>What is reranking?</h2>
+    <p>Reranking is the second pass in a good retrieval system. You first pull, say, the top 50 candidate chunks cheaply with vector search, then a heavier <i>reranker</i> model re-scores those 50 by how well each actually answers the query — and you keep only the best 5 to feed the model. It's the step that turns "roughly related" into "actually right," and for a URL-first memory product it's often the difference between surfacing the paragraph that matters and burying it at rank 40.</p>
     <details>
       <summary>Learn more</summary>
-      <p>An embedding <b>model</b> maps input to a fixed-length vector (say 768 or 1,536 dimensions). Because semantically related items land near each other, you can measure closeness with <b>cosine similarity</b> and pull the top matches fast using a <b>vector database</b> (FAISS, pgvector, Pinecone). This is what powers retrieval-augmented generation: instead of stuffing everything into the prompt, you embed the user's query, fetch the nearest stored chunks, and feed only those to the model. For a URL-first memory product, the quality of your chunking + embedding strategy <i>is</i> the product — it decides whether the right context surfaces when it matters.</p>
-      <p><a href="https://platform.openai.com/docs/guides/embeddings" onclick="return openLink(this)">→ OpenAI's guide to embeddings</a></p>
+      <p>Embeddings are fast because query and document are encoded <b>separately</b> — great for scanning millions of chunks, but the query never "sees" the document. A <b>cross-encoder reranker</b> fixes that: it feeds the query and each candidate <i>together</i> through a transformer, so it can judge fine-grained relevance (negation, specificity, intent) that a cosine-similarity score misses. The trade-off is cost — you can't cross-encode your whole corpus, so the pattern is always <b>retrieve wide, rerank narrow</b>. In practice a reranker is the cheapest single upgrade to RAG quality: same index, same embeddings, but the right context lands in the prompt far more often. For Kepler, retrieval + reranking quality basically <i>is</i> the product — it decides whether the correct URL surfaces at the moment it's needed.</p>
+      <p><a href="https://www.pinecone.io/learn/series/rag/rerankers/" onclick="return openLink(this)">→ Pinecone's guide to rerankers</a></p>
     </details>
   </section>
 
-  <article class="hero">
-    <div class="band">Top Story · AI &amp; Agents</div>
-    <div class="body">
-      <h2>MCP is going stateless: the 2026-07-28 release candidate lands, beta SDKs now shipping</h2>
-      <p>The next Model Context Protocol spec strips out the initialize handshake and session IDs so any request can hit any server instance — a big deal for horizontally scaled agents. Beta SDKs are already out ahead of the 28 July final; if Kepler exposes an MCP server, this changes the transport contract.</p>
-      <div class="src"><span class="badge v">✓ In focus · ships 28 Jul</span> <span class="dot"></span> Model Context Protocol Blog <span class="dot"></span> <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/" onclick="return openLink(this)">Read source ↗</a></div>
-      <div class="actions">
-        <span class="lbl">Tune tomorrow:</span>
-        <button class="up" onclick="tog(this)">▲ More</button>
-        <button class="down" onclick="tog(this)">▼ Less</button>
-        <button class="share" onclick="share('MCP is going stateless: the 2026-07-28 release candidate','https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/')">Share ↗</button>
+  <!-- ===================== HERO / ANCHOR ===================== -->
+  <div class="herowrap">
+    <article class="flip hero">
+      <div class="flip-inner">
+        <div class="face front">
+          <div class="band">Top Story · AI &amp; Agents</div>
+          <div class="cbody"><div class="inner-pad">
+            <h2 class="fhead">OpenAI ships GPT-5.6 — Sol, Terra &amp; Luna — after a US national-security review</h2>
+            <p>OpenAI publicly launched its most capable model on 8 July after a government-forced delay over cyber-misuse concerns. Sol sets a new state of the art on Terminal-Bench for agentic coding; Terra lands ~2× cheaper than GPT-5.5; Luna prioritises speed and cost. Frontier launches now come with a federal sign-off.</p>
+            <div class="src"><span class="badge c">Context · 8 Jul</span> <span class="dot"></span> Tech Startups <span class="dot"></span> <a href="https://techstartups.com/2026/07/08/openai-to-launch-gpt-5-6-its-most-advanced-ai-model-yet-after-u-s-national-security-review/" onclick="return openLink(this)">Read source ↗</a></div>
+            <div class="actions">
+              <span class="lbl">Tune tomorrow:</span>
+              <button class="up" onclick="tog(event,this)">👍 More</button>
+              <button class="down" onclick="tog(event,this)">👎 Less</button>
+              <button class="share" onclick="share(event,'OpenAI ships GPT-5.6 (Sol, Terra, Luna) after a US security review','https://techstartups.com/2026/07/08/openai-to-launch-gpt-5-6-its-most-advanced-ai-model-yet-after-u-s-national-security-review/')">Share ↗</button>
+              <button class="why" onclick="flip(event,this)">Why it matters ⟳</button>
+            </div>
+          </div></div>
+        </div>
+        <div class="face back">
+          <div class="hband">Why it matters — for you, Jacko</div>
+          <div class="inner-pad">
+            <p>Sol's agentic coding and cyber gains reset the ceiling every AI product is measured against, Kepler included. But watch the Terra tier: ~2× cheaper than 5.5 means the cost floor for context-heavy retrieval just dropped, which quietly improves the unit economics of a URL-first memory product. And a model launch now needing a US security sign-off tells you how fast your category is being pulled into the regulated column.</p>
+            <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </article>
+    </article>
+  </div>
 
+  <!-- ===================== AI & AGENTS ===================== -->
   <div class="sec-title">AI &amp; Agents</div>
   <div class="grid">
-    <div class="card">
-      <h3>What the stateless spec breaks for agent auth</h3>
-      <p>With sessions removed, the identity and permission model shifts: auth context now rides on every request rather than a sticky session. Worth reading before you wire agents into anything sensitive.</p>
-      <div class="src"><span class="badge v">✓ This week</span> <span class="dot"></span> WorkOS <span class="dot"></span> <a href="https://workos.com/blog/mcp-2026-spec-agent-authentication" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('What the stateless MCP spec breaks for agent auth','https://workos.com/blog/mcp-2026-spec-agent-authentication')">Share ↗</button></div>
-    </div>
-    <div class="card">
-      <h3>Enterprise-ready MCP brings fresh security challenges</h3>
-      <p>As MCP matures into an enterprise standard, researchers warn the wider surface area — and its role as a fast-growing vector for agent hijacking — makes hardening non-optional. NSA guidance and new CVEs landed this month.</p>
-      <div class="src"><span class="badge v">✓ Jul</span> <span class="dot"></span> SecurityWeek <span class="dot"></span> <a href="https://www.securityweek.com/new-enterprise-ready-mcp-specification-brings-new-security-challenges/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Enterprise-ready MCP brings fresh security challenges','https://www.securityweek.com/new-enterprise-ready-mcp-specification-brings-new-security-challenges/')">Share ↗</button></div>
-    </div>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">Agents hit production — governance can't keep up</h3>
+          <p>Gartner projects 40% of enterprise apps will embed agents by end-2026, up from under 5% in 2025. The July read: the models are ready, the guardrails, audit trails and ownership aren't — governance is now the bottleneck, not capability.</p>
+          <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> Technology Radar <span class="dot"></span> <a href="https://www.hectorpincheira.com/en/news/technological-radar-july-2026-ai-agents-go-into-production-and-governance-doesnt-keep-up/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Agents hit production, governance cannot keep up','https://www.hectorpincheira.com/en/news/technological-radar-july-2026-ai-agents-go-into-production-and-governance-doesnt-keep-up/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>When the buyer pain moves from "can it work" to "can I trust and audit it," verifiable, sourced context becomes a positioning lane Kepler can own. It's also the exact tension an Alinta "Head of tech" inherits: putting agents into a regulated utility without a governance story is a career-limiting move — and the person who brings that story is valuable.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">Microsoft's Sales &amp; Service Agents go GA</h3>
+          <p>Microsoft made its Sales Agent and Service Agent generally available inside Dynamics 365 and Microsoft 365 Copilot this week — pushing autonomous agents into the default productivity surface for most enterprises rather than a lab pilot.</p>
+          <div class="src"><span class="badge c">Context · 8 Jul</span> <span class="dot"></span> AI Agents Directory <span class="dot"></span> <a href="https://aiagentsdirectory.com/news/ai-agents-directory-daily-brief-july-8-2026" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Microsoft Sales and Service Agents go GA in Dynamics 365 and M365 Copilot','https://aiagentsdirectory.com/news/ai-agents-directory-daily-brief-july-8-2026')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>If the default agent surface for most companies is now Microsoft's, Kepler either integrates as the memory/context layer underneath those Copilot agents or gets designed around. The growth wedge is being the thing that makes an enterprise's agents smarter about its own URLs and knowledge — distribution through, not against, the incumbents.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
   </div>
 
+  <!-- ===================== COMPETITOR & CATEGORY ===================== -->
   <div class="sec-title">Competitor &amp; Category Watch</div>
   <div class="grid">
-    <div class="card">
-      <h3>Claude opens memory to every user — plus a monthly recap</h3>
-      <p>Anthropic made memory-from-chat-history free for all Claude tiers and added a "monthly recap" showing your top topics and work patterns. The memory layer Kepler sells is now table stakes inside the big assistants — differentiation has to move up the stack.</p>
-      <div class="src"><span class="badge v">✓ Jul</span> <span class="dot"></span> Yahoo Tech <span class="dot"></span> <a href="https://tech.yahoo.com/ai/claude/articles/claude-makes-ai-memory-feature-071303312.html" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Claude opens memory to every user','https://tech.yahoo.com/ai/claude/articles/claude-makes-ai-memory-feature-071303312.html')">Share ↗</button></div>
-    </div>
-    <div class="card">
-      <h3>ChatGPT ships granular memory controls</h3>
-      <p>OpenAI rolled out finer memory management — delete individual memories, edit the summary in natural language, or turn it off without wiping chats. The category is converging on user-controllable, editable memory.</p>
-      <div class="src"><span class="badge v">✓ Jul</span> <span class="dot"></span> Releasebot (OpenAI notes) <span class="dot"></span> <a href="https://releasebot.io/updates/openai/chatgpt" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('ChatGPT ships granular memory controls','https://releasebot.io/updates/openai/chatgpt')">Share ↗</button></div>
-    </div>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">Claude adds "Reflect" — and imports rivals' memories</h3>
+          <p>Anthropic shipped a monthly-recap feature ("Reflect", 9 Jul) surfacing your top topics and work patterns from memory, on top of the earlier tool that imports chat history from ChatGPT, Gemini and Copilot. The assistants are racing to own — and port — your memory.</p>
+          <div class="src"><span class="badge c">Context · 9 Jul</span> <span class="dot"></span> Releasebot <span class="dot"></span> <a href="https://releasebot.io/updates/anthropic/claude" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Claude adds Reflect monthly recap and imports memories from ChatGPT, Gemini, Copilot','https://releasebot.io/updates/anthropic/claude')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>Memory portability is the moat-eroding move for any standalone memory product: if "your memories" travel freely between assistants, the store itself is a commodity. Kepler's defensibility has to be URL-first ingestion and retrieval/rerank quality, not the vault. Reflect also hints where value is migrating — insight over storage — which is worth reflecting in Kepler's roadmap and messaging.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">NotebookLM 2.0 goes agentic</h3>
+          <p>Google's June relaunch (on Gemini 3.5 + Antigravity) gave every notebook sandboxed code execution and <i>autonomous web sourcing</i> — type an idea and it goes and pulls cited sources itself, reporting a ~65%+ win rate over the prior version.</p>
+          <div class="src"><span class="badge c">Context · 8 Jun</span> <span class="dot"></span> NotebookLM Guide <span class="dot"></span> <a href="https://notebooklm-guide.com/notebooklm-updates" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'NotebookLM 2.0 goes agentic with autonomous web sourcing and code execution','https://notebooklm-guide.com/notebooklm-updates')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>Autonomous web sourcing means NotebookLM now does research <i>collection</i>, not just Q&amp;A over what you upload — stepping squarely into Kepler's "get me the right context from the web" territory. The competitive line is provenance and precision: NotebookLM grounds on Google results, while Kepler's pitch is the specific URLs you choose, retrieved and reranked exactly. Lean into control and citation quality where a general tool has to stay generic.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
   </div>
 
+  <!-- ===================== STARTUPS & FUNDING ===================== -->
   <div class="sec-title">Startups &amp; Funding</div>
   <div class="grid">
-    <div class="card">
-      <h3>Weekly AI raises: TwelveLabs, Even Realities, Zeroth</h3>
-      <p>This week's roundup: TwelveLabs closed $100M Series B for video-understanding AI, Even Realities took $150M for camera-free smart glasses, and Ant-backed Zeroth raised ~$74M for humanoid robotics. Capital keeps flowing to AI that meets the physical world.</p>
-      <div class="src"><span class="badge c">Context · 6 Jul</span> <span class="dot"></span> Tech Startups <span class="dot"></span> <a href="https://techstartups.com/2026/07/06/venture-capital-startup-funding-roundup-july-6-2026/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Weekly AI raises: TwelveLabs, Even Realities, Zeroth','https://techstartups.com/2026/07/06/venture-capital-startup-funding-roundup-july-6-2026/')">Share ↗</button></div>
-    </div>
-    <div class="card">
-      <h3>North American startup funding smashed records in H1, driven by AI</h3>
-      <p>Crunchbase data shows first-half 2026 venture funding hit record highs in North America, concentrated in AI — though the boom is notably <i>not</i> global. Useful backdrop for how competitively Kepler's raise environment reads.</p>
-      <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> Crunchbase News <span class="dot"></span> <a href="https://news.crunchbase.com/venture/na-startup-funding-ma-shattered-records-ai-q2-2026/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('North American startup funding smashed records in H1','https://news.crunchbase.com/venture/na-startup-funding-ma-shattered-records-ai-q2-2026/')">Share ↗</button></div>
-    </div>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">Together AI closes an $800M Series C</h3>
+          <p>Together AI raised $800M (post ~$8.3B valuation) for its platform that lets enterprises train and run AI on open-source models — one of the week's biggest rounds and a sign that the "picks-and-shovels" infra layer still commands the largest cheques.</p>
+          <div class="src"><span class="badge c">Context · 2 Jul</span> <span class="dot"></span> Crunchbase News <span class="dot"></span> <a href="https://news.crunchbase.com/venture/biggest-funding-rounds-ai-energy-biotech-joulent/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Together AI closes an $800M Series C at ~$8.3B','https://news.crunchbase.com/venture/biggest-funding-rounds-ai-energy-biotech-joulent/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>Capital pouring into the open-source model/infra layer lowers the cost and raises the quality of the models Kepler builds retrieval on top of — a tailwind for anyone in the application layer. For your own raise thinking, an $8.3B infra comp is the anchor investors carry into the room, and a reminder that horizontal AI tools have to argue hard against infra for attention.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">Energy muscles onto the funding board</h3>
+          <p>On a holiday-shortened week, energy topped Crunchbase's biggest-rounds list — Joulent at $1.75B — with AI infra (Together) and Twelve Labs' $100M video round close behind. The money is clustering where AI meets the physical world.</p>
+          <div class="src"><span class="badge c">Context · 2 Jul</span> <span class="dot"></span> Crunchbase News <span class="dot"></span> <a href="https://news.crunchbase.com/venture/biggest-funding-rounds-ai-energy-biotech-joulent/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Energy tops the week: Joulent raises $1.75B','https://news.crunchbase.com/venture/biggest-funding-rounds-ai-energy-biotech-joulent/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>Energy leading a VC board is a useful cross-signal as you weigh Alinta: investor appetite for the transition is real money, not just policy — a growth-minded utility parent has room to fund ambitious tech. For Kepler, note the mega-rounds cluster in infra and applied verticals, not horizontal AI tools, which sharpens the case for a specific, defensible wedge.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
   </div>
 
+  <!-- ===================== AUSTRALIAN BUSINESS & ECONOMY ===================== -->
   <div class="sec-title">Australian Business &amp; Economy</div>
   <div class="grid">
-    <div class="card">
-      <h3>ASX set to open higher; oil jumps as Iran declares Hormuz "closed"</h3>
-      <p>ASX 200 futures pointed up ~0.5% to start the week after a second straight weekly Wall Street gain, but Brent spiked ~4.9% to US$78.90 as Iran declared the Strait of Hormuz closed over the weekend — a live risk for local energy and inflation.</p>
-      <div class="src"><span class="badge v">✓ 13 Jul</span> <span class="dot"></span> Market Index <span class="dot"></span> <a href="https://www.marketindex.com.au/news/asx-200-live-today-monday-13th-july" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('ASX set to open higher; oil jumps on Hormuz','https://www.marketindex.com.au/news/asx-200-live-today-monday-13th-july')">Share ↗</button></div>
-    </div>
-    <div class="card">
-      <h3>GQG Partners bleeds US$3.2B of June outflows</h3>
-      <p>ASX-listed fund manager GQG reported US$3.2B of net outflows in June and US$15.1B for the half, dragging funds under management down to US$156B. A reminder that active-management flows stay under pressure.</p>
-      <div class="src"><span class="badge v">✓ 13 Jul</span> <span class="dot"></span> Market Index <span class="dot"></span> <a href="https://www.marketindex.com.au/news/asx-200-live-today-monday-13th-july" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('GQG Partners bleeds US$3.2B of June outflows','https://www.marketindex.com.au/news/asx-200-live-today-monday-13th-july')">Share ↗</button></div>
-    </div>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">ASX 200 grinds to 8,808 in a shaky, tech-led-down session</h3>
+          <p>The benchmark finished Monday at 8,808.5, up a token 0.03% after a late comeback from red. Tech was the drag (IT index −2.48%), with gold miners and utilities also soft; communications and consumer discretionary held it green.</p>
+          <div class="src"><span class="badge v">✓ 13 Jul</span> <span class="dot"></span> The Motley Fool AU <span class="dot"></span> <a href="https://www.fool.com.au/2026/07/13/here-are-the-top-10-asx-200-shares-today-13-july-2026/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'ASX 200 grinds to 8,808 in a shaky, tech-led-down session','https://www.fool.com.au/2026/07/13/here-are-the-top-10-asx-200-shares-today-13-july-2026/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>A tech-led down day on a flat index is the tape that makes AU investors cautious on unprofitable software — worth factoring into the timing and narrative of any local Kepler raise. And if you take the Alinta role, this is your daily weather: utilities were among today's losers, so sector sentiment is part of the job.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">RBA holds at 4.35% as IMF trims growth to 1.9%</h3>
+          <p>The Reserve Bank left the cash rate at 4.35% after three hikes earlier in 2026, judging conditions now tight enough. The IMF cut Australia's 2026 growth forecast to 1.9% (from 2.0%) and flagged inflation staying near 4% — a slow-growth, higher-for-longer backdrop.</p>
+          <div class="src"><span class="badge c">Context · Jul</span> <span class="dot"></span> RBA · IMF via Grafa <span class="dot"></span> <a href="https://www.rba.gov.au/media-releases/2026/mr-26-15.html" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'RBA holds at 4.35% as IMF trims Australia growth to 1.9%','https://www.rba.gov.au/media-releases/2026/mr-26-15.html')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>Rates stuck at 4.35% with growth cut to 1.9% and ~4% inflation means capital stays expensive — a growth-stage startup like Kepler should plan for a longer, more disciplined runway rather than a cheap-money sprint. For the Alinta decision, sticky inflation keeps energy prices and political scrutiny front-of-mind, which is precisely the environment a utility tech leader lives in.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
   </div>
 
+  <!-- ===================== GROWTH & MARKETING ===================== -->
   <div class="sec-title">Growth &amp; Marketing</div>
   <div class="grid">
-    <div class="card">
-      <h3>Zero-click is eating discovery — optimise for agents</h3>
-      <p>2026 content reads converge on one theme: audiences increasingly get answers inside AI Overviews, ChatGPT and social feeds without visiting your site, so LLMs and agentic marketplaces are becoming acquisition channels. For a URL-first product, being <i>discoverable by agents</i> is now a growth lever.</p>
-      <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> Mixpanel · Userpilot <span class="dot"></span> <a href="https://mixpanel.com/blog/product-led-growth/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Zero-click is eating discovery — optimise for agents','https://mixpanel.com/blog/product-led-growth/')">Share ↗</button></div>
-    </div>
-    <div class="card">
-      <h3>PLG's measurement gap: 91% invest, ~34% track activation</h3>
-      <p>Benchmarks show most B2B SaaS runs a PLG motion and plans to spend more, yet only about a third actually track activation — where programs quietly leak value. Product-qualified leads still convert 3–5× better than MQLs.</p>
-      <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> Mixpanel <span class="dot"></span> <a href="https://mixpanel.com/blog/product-led-growth/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('PLG measurement gap: 91% invest, 34% track activation','https://mixpanel.com/blog/product-led-growth/')">Share ↗</button></div>
-    </div>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">GEO is the new SEO — optimise to be cited by AI</h3>
+          <p>eMarketer projects ~31% of the US population will use generative AI search in 2026 (ChatGPT past 800M weekly users). The playbook shifts to Generative Engine Optimisation: structure content so ChatGPT, Perplexity, Claude and AI Overviews retrieve and cite <i>you</i>.</p>
+          <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> eMarketer <span class="dot"></span> <a href="https://www.emarketer.com/content/faq-on-geo-aeo--where-ai-search-seo-overlap-2026" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'GEO is the new SEO: optimise to be cited by AI search','https://www.emarketer.com/content/faq-on-geo-aeo--where-ai-search-seo-overlap-2026')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>With roughly a third of the US on generative AI search, being cited inside the answer is a genuine acquisition channel — and a URL-first product is unusually well placed to be the citable source. This is a concrete growth play you own: make Kepler's own content, and its users' public URLs, the material the answer engines quote.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">AI referrals: tiny volume, outsized conversion</h3>
+          <p>The same data shows AI platforms still send under 1% of referral traffic — but those visitors convert at 4–5× the rate of traditional search (per The Washington Post's numbers). GEO is a quality-over-quantity channel, not a firehose.</p>
+          <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> eMarketer <span class="dot"></span> <a href="https://www.emarketer.com/content/faq-on-geo-aeo--where-ai-search-seo-overlap-2026" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'AI referrals: tiny volume, outsized conversion','https://www.emarketer.com/content/faq-on-geo-aeo--where-ai-search-seo-overlap-2026')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>If AI-sourced visitors convert 4–5× better even at &lt;1% volume, GEO is worth instrumenting now — before competitors do — as a high-intent channel. Practically: build the tracking for AI-referred signups into Kepler's funnel this quarter, because you can't optimise a channel you don't measure, and the incremental CAC math here is unusually favourable.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
   </div>
 
+  <!-- ===================== ENERGY & UTILITIES · ALINTA WATCH ===================== -->
   <div class="sec-title">Energy &amp; Utilities · Alinta Watch</div>
   <div class="grid">
-    <div class="card">
-      <h3>Chevron locks in 46 PJ of WA gas for Alinta</h3>
-      <p>Chevron signed a five-year deal to supply Alinta Energy 46 petajoules of Western Australian gas from July 2027, sourced across its Gorgon and North West Shelf projects — shoring up Alinta's WA generation supply. Still the freshest Alinta-specific item in the window.</p>
-      <div class="src"><span class="badge c">Context · ~10 Jul</span> <span class="dot"></span> Rigzone <span class="dot"></span> <a href="https://www.rigzone.com/news/chevron_to_continue_supplying_gas_to_australian_utility_alinta-10-jul-2026-184111-article/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('Chevron locks in 46 PJ of WA gas for Alinta','https://www.rigzone.com/news/chevron_to_continue_supplying_gas_to_australian_utility_alinta-10-jul-2026-184111-article/')">Share ↗</button></div>
-    </div>
-    <div class="card">
-      <h3>A major new gas plant joins the federal approval queue</h3>
-      <p>One of Australia's biggest renewables developers has lodged plans for one of the country's largest new gas plants for federal environmental approval — a sign firming capacity remains the battleground for gentailers like Alinta, AGL and Origin.</p>
-      <div class="src"><span class="badge v">✓ 13 Jul</span> <span class="dot"></span> RenewEconomy <span class="dot"></span> <a href="https://reneweconomy.com.au/one-of-australias-biggest-renewables-developers-seeks-to-build-one-of-countrys-biggest-new-gas-plants/" onclick="return openLink(this)">Source ↗</a></div>
-      <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(this)">▲ More</button><button class="down" onclick="tog(this)">▼ Less</button><button class="share" onclick="share('A major new gas plant joins the federal approval queue','https://reneweconomy.com.au/one-of-australias-biggest-renewables-developers-seeks-to-build-one-of-countrys-biggest-new-gas-plants/')">Share ↗</button></div>
-    </div>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">Sembcorp completes its AU$6.5B takeover of Alinta</h3>
+          <p>Singapore's Sembcorp closed its AU$6.5B (US$4.32B) acquisition of Alinta Energy from Chow Tai Fook — adding 3.4GW of operating assets and a 10.4GW development pipeline. No management changes: CEO Jeff Dimery stays on to lead. The freshest confirmed Alinta-specific item.</p>
+          <div class="src"><span class="badge c">Context · 12 Jun</span> <span class="dot"></span> Energy-Storage.news <span class="dot"></span> <a href="https://www.energy-storage.news/sembcorp-completes-us4-32-billion-acquisition-of-alinta-energy-adds-10-4gw-australian-pipeline/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Sembcorp completes its AU$6.5B takeover of Alinta Energy','https://www.energy-storage.news/sembcorp-completes-us4-32-billion-acquisition-of-alinta-energy-adds-10-4gw-australian-pipeline/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>This is the single most decision-relevant item on the page. A "Head of tech" role now sits inside a well-capitalised parent with an explicit growth mandate and a 10.4GW pipeline — Reeves Plains BESS, Wagerup, the Oven Mountain pumped-hydro project — not a run-off asset being milked. That renewables-and-storage build-out is exactly where a tech leader's leverage (forecasting, trading, grid data, agents) would land. Dimery staying signals continuity, not upheaval.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">Chevron locks in 46 PJ of WA gas for Alinta to 2032</h3>
+          <p>Chevron signed a five-year deal to supply Alinta 46 petajoules of Western Australian gas from July 2027, sourced across Wheatstone, Gorgon and the North West Shelf — replacing a prior 20-PJ/yr contract. Firm fuel for Alinta's WA generation well into the next decade.</p>
+          <div class="src"><span class="badge c">Context · 10 Jul</span> <span class="dot"></span> Argus Media <span class="dot"></span> <a href="https://www.argusmedia.com/en/news-and-insights/latest-market-news/2850453-chevron-australia-s-alinta-sign-five-year-gas-deal" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Chevron locks in 46 PJ of WA gas for Alinta from 2027','https://www.argusmedia.com/en/news-and-insights/latest-market-news/2850453-chevron-australia-s-alinta-sign-five-year-gas-deal')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>Alinta contracting five years of gas from 2027 shows the firming/generation side is actively planning for the long haul — the kind of stability that matters if you're joining to modernise its tech stack. Through the Kepler lens, it's also a reminder that energy's data problems — trading, demand forecasting, grid ops — are a large adjacent market for context and AI tooling.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
   </div>
 
+  <!-- ===================== QUICK HITS ===================== -->
   <div class="sec-title">Quick Hits</div>
   <ul class="hits">
-    <li><span class="tag">Agents</span><span><b>MCP</b> goes stateless in the 2026-07-28 RC; beta SDKs are out. <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Competitor</span><span><b>Claude</b> makes chat-history memory free for all users. <a href="https://tech.yahoo.com/ai/claude/articles/claude-makes-ai-memory-feature-071303312.html" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Funding</span><span><b>TwelveLabs</b> raises $100M Series B for video-understanding AI. <a href="https://techstartups.com/2026/07/06/venture-capital-startup-funding-roundup-july-6-2026/" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Markets</span><span><b>ASX 200</b> futures +0.5%; Brent spikes on Hormuz standoff. <a href="https://www.marketindex.com.au/news/asx-200-live-today-monday-13th-july" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Energy</span><span><b>Alinta</b> secures 46 PJ of WA gas from Chevron to 2032+. <a href="https://www.rigzone.com/news/chevron_to_continue_supplying_gas_to_australian_utility_alinta-10-jul-2026-184111-article/" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Security</span><span><b>NSA + researchers</b> flag MCP as a rising agent-hijack vector. <a href="https://www.securityweek.com/new-enterprise-ready-mcp-specification-brings-new-security-challenges/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">AI</span><span><b>GPT-5.6</b> (Sol/Terra/Luna) ships after a US national-security review. <a href="https://techstartups.com/2026/07/08/openai-to-launch-gpt-5-6-its-most-advanced-ai-model-yet-after-u-s-national-security-review/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Competitor</span><span><b>Claude</b> adds "Reflect" recap and imports memories from ChatGPT/Gemini/Copilot. <a href="https://releasebot.io/updates/anthropic/claude" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Funding</span><span><b>Together AI</b> raises $800M (~$8.3B); energy's <b>Joulent</b> tops the week at $1.75B. <a href="https://news.crunchbase.com/venture/biggest-funding-rounds-ai-energy-biotech-joulent/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Markets</span><span><b>ASX 200</b> flat at 8,808; RBA holds 4.35%, IMF trims growth to 1.9%. <a href="https://www.fool.com.au/2026/07/13/here-are-the-top-10-asx-200-shares-today-13-july-2026/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Energy</span><span><b>Sembcorp</b> completes its AU$6.5B Alinta takeover; Dimery stays on. <a href="https://www.energy-storage.news/sembcorp-completes-us4-32-billion-acquisition-of-alinta-energy-adds-10-4gw-australian-pipeline/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Regulation</span><span><b>Bowen</b> asks the ACCC/AER to probe AGL &amp; Origin over daily-supply-charge hikes. <a href="https://grafa.com/en/news/australia/government-probes-origin-and-agl-over-price-rises" onclick="return openLink(this)">↗</a></span></li>
   </ul>
 
   <div class="foot">
-    <p>👍 <b>More</b> / 👎 <b>Less</b> on any story and tomorrow's edition adjusts to what you rate. Or just tell me "more AI infra, less markets."</p>
-    <p style="font-size:12px;opacity:.85">Honesty note: today's genuinely fresh window is Sun 12 → Tue 14 Jul. No breaking Alinta item landed inside 24–48h, so the Chevron gas deal (~10 Jul) is tagged <b>Context</b>; PLG/marketing items are <b>Trend reports</b>, not news.</p>
+    <p>👍 <b>More</b> / 👎 <b>Less</b> on any story and tomorrow's edition adjusts to what you rate. Or just tell me "more energy, less markets." Flip any card with <b>Why it matters ⟳</b> for the Kepler / Alinta angle.</p>
+    <p style="font-size:12px;opacity:.85">Honesty note: today's genuinely fresh 24–48h window (Sun 12 → Tue 14 Jul) really only contains the ASX/markets item, tagged <b>✓</b>. GPT-5.6 (8 Jul), Claude Reflect (9 Jul), Together AI (2 Jul), the Sembcorp completion (12 Jun) and the Chevron gas deal (10 Jul) all fall outside that window and are tagged <b>Context</b>. No breaking Alinta headline landed inside 24–48h. GEO items are <b>Trend reports</b>. Every URL was fetched and date-checked; unverified stories were dropped.</p>
   </div>
 
-  <div class="stamp">The Daily Dispatch · Tuesday 14 July 2026<br>Every story cited &amp; recency-checked · stale items dropped or tagged</div>
+  <div class="stamp">The Daily Dispatch · Tuesday 14 July 2026<br>Every story cited &amp; recency-checked · stale items dropped or tagged · flip + float edition</div>
 
 </div>
 <div id="toast">Link copied</div>
 <script>
-  function tog(btn){var r=btn.parentElement;r.querySelectorAll('.up,.down').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');}
-  function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1600);}
-  function openLink(a){ if(navigator.userAgent){ window.open(a.href,'_blank'); } return false; }
-  async function share(title,url){
-    if(navigator.share){ try{ await navigator.share({title:title,url:url}); return; }catch(e){} }
+  /* ---------- feedback / share / flip ---------- */
+  function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show')},1700);}
+  function openLink(a){ window.open(a.href,'_blank','noopener'); return false; }
+  function tog(e,btn){ e.stopPropagation();
+    var r=btn.parentElement; r.querySelectorAll('.up,.down').forEach(function(b){b.classList.remove('on')});
+    btn.classList.add('on'); toast('Noted — tomorrow adjusts'); }
+  async function share(e,title,url){ e.stopPropagation();
+    if(navigator.share){ try{ await navigator.share({title:title,url:url}); return; }catch(err){} }
     try{ await navigator.clipboard.writeText(url); toast('Link copied'); }
-    catch(e){ window.open(url,'_blank'); }
+    catch(err){ window.open(url,'_blank','noopener'); } }
+  function flip(e,btn){ e.stopPropagation(); btn.closest('.flip').classList.add('flipped'); }
+  function unflip(e,btn){ e.stopPropagation(); btn.closest('.flip').classList.remove('flipped'); }
+
+  /* ---------- size each card to its taller face ---------- */
+  function sizeCards(){
+    // Guard: some embedded/headless viewports report 0 width to JS, which would
+    // make content wrap into a sliver and yield garbage heights. Bail if so —
+    // the front face already defines a sane height on its own.
+    if(!window.innerWidth || window.innerWidth < 200) return;
+    document.querySelectorAll('.flip').forEach(function(f){
+      var inner=f.querySelector('.flip-inner');
+      var front=f.querySelector('.front'), back=f.querySelector('.back');
+      if(front.offsetWidth < 120) return;            // layout not ready / collapsed
+      inner.style.minHeight='0';
+      // front is in-flow (its offsetHeight is the true card height); back may overflow.
+      var h=Math.max(front.offsetHeight, back.scrollHeight)+2;
+      inner.style.minHeight=h+'px';
+    });
   }
+  function sizeSoon(){ requestAnimationFrame(function(){ requestAnimationFrame(sizeCards); }); }
+  var _rt; function onResize(){ clearTimeout(_rt); _rt=setTimeout(sizeCards,150); }
+  sizeSoon();
+  window.addEventListener('load', function(){ sizeCards(); setTimeout(sizeCards,300); });
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(function(){ sizeCards(); setTimeout(sizeCards,120); }); }
+  window.addEventListener('resize', onResize);
+  document.querySelectorAll('.snippet details').forEach(function(d){ d.addEventListener('toggle', sizeCards); });
+
+  /* ---------- floating parallax ---------- */
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var root = document.documentElement;
+    var tgt={x:0,y:0}, cur={x:0,y:0};
+    var MAXR=6.5, MAXT=9;            // max tilt (deg) and inner drift (px)
+    var running=false;
+    function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+    function loop(){
+      cur.x += (tgt.x-cur.x)*0.08;
+      cur.y += (tgt.y-cur.y)*0.08;
+      root.style.setProperty('--tx', (cur.x*MAXR).toFixed(3));
+      root.style.setProperty('--ty', (-cur.y*MAXR).toFixed(3));
+      root.style.setProperty('--px', (cur.x*MAXT).toFixed(3));
+      root.style.setProperty('--py', (cur.y*MAXT).toFixed(3));
+      requestAnimationFrame(loop);
+    }
+    function start(){ if(running||reduce) return; running=true; requestAnimationFrame(loop); }
+
+    /* desktop: pointer vs viewport centre (ignore touch) */
+    if(!reduce){
+      window.addEventListener('pointermove', function(e){
+        if(e.pointerType==='touch') return;
+        tgt.x = clamp(e.clientX/window.innerWidth*2 - 1, -1, 1);
+        tgt.y = clamp(e.clientY/window.innerHeight*2 - 1, -1, 1);
+        start();
+      }, {passive:true});
+    }
+
+    /* mobile: gyro, clamped ~±7deg */
+    function onOrient(ev){
+      if(ev.gamma==null || ev.beta==null) return;
+      tgt.x = clamp(ev.gamma, -7, 7)/7;
+      tgt.y = clamp(ev.beta - 45, -7, 7)/7;
+    }
+    window.enableMotion = function(){
+      var btn=document.getElementById('motionBtn');
+      if(reduce){ toast('Reduced-motion is on — floating stays off'); return; }
+      function attach(){
+        window.addEventListener('deviceorientation', onOrient);
+        start(); btn.classList.add('on'); btn.textContent='✨ Floating on';
+        toast('Floating on — tilt your phone');
+      }
+      try{
+        if(typeof DeviceOrientationEvent!=='undefined' && typeof DeviceOrientationEvent.requestPermission==='function'){
+          DeviceOrientationEvent.requestPermission().then(function(state){
+            if(state==='granted'){ attach(); } else { toast('Motion permission denied'); }
+          }).catch(function(){ toast('Motion unavailable'); });
+        } else if('DeviceOrientationEvent' in window){
+          attach();
+        } else {
+          start(); toast('Floating on (pointer)'); btn.classList.add('on'); btn.textContent='✨ Floating on';
+        }
+      }catch(err){ toast('Motion unavailable'); }
+    };
+  })();
 </script>
 </body>
 </html>
