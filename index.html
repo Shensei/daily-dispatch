@@ -23,11 +23,9 @@
   .greet{text-align:center;font-family:var(--serif);font-size:17px;color:var(--ink);margin:14px 0 12px}
   .greet b{color:var(--accent)}
 
-  .motion{display:flex;flex-direction:column;align-items:center;gap:6px;margin:0 0 20px}
-  #motionBtn{font-family:var(--sans);font-size:13px;font-weight:600;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);border-radius:22px;padding:8px 16px;cursor:pointer;transition:all .15s}
+  #motionBtn{position:fixed;top:12px;right:12px;z-index:2000;display:none;width:36px;height:36px;padding:0;border-radius:50%;font-size:16px;line-height:34px;text-align:center;border:1px solid var(--line);background:var(--accent-soft);color:var(--accent);cursor:pointer;box-shadow:0 2px 8px -2px rgba(40,30,15,.4);transition:all .15s;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
   #motionBtn:hover{background:var(--accent);color:#fff}
-  #motionBtn.on{background:var(--up-soft);border-color:var(--up);color:var(--up)}
-  .hint{font-size:12px;color:var(--muted);text-align:center;letter-spacing:.01em}
+  #motionBtn.show{display:block}
 
   .snippet{background:var(--dark);color:#eef2f7;border-radius:14px;padding:18px 20px;margin-bottom:22px}
   .snippet .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7fb0ff;font-weight:600;margin-bottom:8px}
@@ -131,10 +129,7 @@
 
   <p class="greet">Good morning, <b>Jacko</b>. GPT-5.6 clears its security review, Claude starts importing rivals' memories, and Alinta's new Singaporean owner is now official — with the ASX limping to a flat, tech-led-down close.</p>
 
-  <div class="motion">
-    <button id="motionBtn" onclick="enableMotion()">✨ Enable floating (motion)</button>
-    <div class="hint">Move your mouse and the cards float toward you. On a phone, tap Enable to steer them by tilt. Hit <b>Why it matters ⟳</b> on any card to flip it.</div>
-  </div>
+  <button id="motionBtn" onclick="enableMotion()" title="Enable floating" aria-label="Enable floating motion">✨</button>
 
   <section class="snippet">
     <div class="lbl">Daily Technical Snippet</div>
@@ -460,6 +455,14 @@
       }, {passive:true});
     }
 
+    /* corner button appears only where a motion-permission gate exists (iOS) */
+    if(!reduce){
+      var mBtn=document.getElementById('motionBtn');
+      if(mBtn && typeof DeviceOrientationEvent!=='undefined' && typeof DeviceOrientationEvent.requestPermission==='function'){
+        mBtn.classList.add('show');
+      }
+    }
+
     /* mobile: gyro, clamped ~±7deg */
     function onOrient(ev){
       if(ev.gamma==null || ev.beta==null) return;
@@ -471,7 +474,7 @@
       if(reduce){ toast('Reduced-motion is on — floating stays off'); return; }
       function attach(){
         window.addEventListener('deviceorientation', onOrient);
-        start(); btn.classList.add('on'); btn.textContent='✨ Floating on';
+        start(); btn.classList.remove('show');
         toast('Floating on — tilt your phone');
       }
       try{
@@ -482,7 +485,7 @@
         } else if('DeviceOrientationEvent' in window){
           attach();
         } else {
-          start(); toast('Floating on (pointer)'); btn.classList.add('on'); btn.textContent='✨ Floating on';
+          start(); toast('Floating on (pointer)'); btn.classList.remove('show');
         }
       }catch(err){ toast('Motion unavailable'); }
     };
