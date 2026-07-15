@@ -1,3 +1,6 @@
 What is MCP (Model Context Protocol)
 Vector embeddings
 Reranking (retrieve wide, rerank narrow)
+
+Context windows and the lost-in-the-middle problem
+Hybrid search (BM25 + dense vectors)
