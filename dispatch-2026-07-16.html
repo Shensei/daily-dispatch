@@ -9,7 +9,7 @@
     color-scheme: light;
     --ink:#1a1917; --paper:#faf8f4; --card:#ffffff; --muted:#6b665d; --line:#e6e1d8;
     --accent:#c8451f; --accent-soft:#f6e8e2; --up:#1f7a4d; --up-soft:#e4f2ea; --down:#9a5b12;
-    --ctx:#7a6f12; --ctx-soft:#f3efd8; --dark:#141a24; --dark2:#1b2431;
+    --bg-soft:#ece9e2; --dark:#141a24; --dark2:#1b2431;
     --serif:Georgia,"Times New Roman",serif; --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
     --tx:0; --ty:0;
   }
@@ -20,23 +20,31 @@
   .mast .kick{display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
   .mast h1{font-family:var(--serif);font-weight:700;font-size:clamp(38px,7vw,60px);letter-spacing:-.01em;line-height:1;margin:10px 0 6px;text-align:center;font-style:italic}
   .mast .sub{text-align:center;font-size:13px;color:var(--muted);letter-spacing:.04em}
-  .greet{text-align:center;font-family:var(--serif);font-size:17px;color:var(--ink);margin:14px 0 12px}
+
+  /* compact weather strip under the masthead */
+  .wx{display:flex;justify-content:center;align-items:center;gap:7px;font-size:12px;color:var(--muted);margin:9px 0 2px;letter-spacing:.01em}
+  .wx .ic{font-size:13px;line-height:1;opacity:.85}
+  .wx b{color:var(--ink);font-weight:600}
+  .wx .sep{opacity:.5}
+
+  .greet{text-align:center;font-family:var(--serif);font-size:17px;color:var(--ink);margin:12px 0 12px}
   .greet b{color:var(--accent)}
 
   #motionBtn{position:fixed;top:12px;right:12px;z-index:2000;display:none;width:36px;height:36px;padding:0;border-radius:50%;font-size:16px;line-height:34px;text-align:center;border:1px solid var(--line);background:var(--accent-soft);color:var(--accent);cursor:pointer;box-shadow:0 2px 8px -2px rgba(40,30,15,.4);transition:all .15s;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
   #motionBtn:hover{background:var(--accent);color:#fff}
   #motionBtn.show{display:block}
 
-  .snippet{background:var(--dark);color:#eef2f7;border-radius:14px;padding:18px 20px;margin-bottom:22px}
-  .snippet .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7fb0ff;font-weight:600;margin-bottom:8px}
-  .snippet h2{font-family:var(--serif);font-size:22px;font-weight:700;margin-bottom:8px}
-  .snippet p{font-size:14.5px;color:#cdd6e2;margin-bottom:8px}
-  .snippet details{margin-top:10px;border-top:1px solid rgba(255,255,255,.14);padding-top:10px}
-  .snippet summary{cursor:pointer;font-size:13px;font-weight:600;color:#7fb0ff;list-style:none}
+  /* ---- compact technical snippet (slim strip) ---- */
+  .snippet{background:var(--dark);color:#eef2f7;border-radius:12px;padding:12px 16px;margin-bottom:20px}
+  .snippet .lbl{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#7fb0ff;font-weight:600;margin-bottom:5px}
+  .snippet h2{font-family:var(--serif);font-size:16px;font-weight:700;margin-bottom:5px}
+  .snippet p{font-size:13px;color:#cdd6e2;margin-bottom:6px;line-height:1.45}
+  .snippet details{margin-top:8px;border-top:1px solid rgba(255,255,255,.14);padding-top:8px}
+  .snippet summary{cursor:pointer;font-size:12px;font-weight:600;color:#7fb0ff;list-style:none}
   .snippet summary::-webkit-details-marker{display:none}
   .snippet summary::before{content:"▸ ";}
   .snippet details[open] summary::before{content:"▾ ";}
-  .snippet details p{margin-top:9px;color:#dbe3ee}
+  .snippet details p{margin-top:7px;color:#dbe3ee;font-size:12.5px;line-height:1.5}
   .snippet a{color:#7fb0ff;text-decoration:none;font-weight:600}
 
   /* ---- floating parallax stage ---- */
@@ -62,9 +70,9 @@
   .src{font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:11px}
   .src .dot{width:3px;height:3px;border-radius:50%;background:var(--muted);display:inline-block}
   .src a{color:var(--accent);text-decoration:none;font-weight:500}
-  .badge{font-weight:600;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:20px}
+  .badge{font-weight:600;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:20px}
   .badge.v{background:var(--up-soft);color:var(--up)}
-  .badge.c{background:var(--ctx-soft);color:var(--ctx)}
+  .badge.b{background:var(--bg-soft);color:var(--muted)}
 
   .actions{display:flex;gap:7px;align-items:center;border-top:1px dashed var(--line);padding-top:11px;margin-top:auto;flex-wrap:wrap}
   .actions .lbl{font-size:11px;color:var(--muted);margin-right:auto;letter-spacing:.02em}
@@ -127,18 +135,20 @@
     <div class="sub">Thursday, 16 July 2026 · tuned to your interests</div>
   </header>
 
-  <p class="greet">Good morning, <b>Jacko</b>. The frontier reshuffles again — GPT-5.6 is now ChatGPT's default and Meta starts charging for its own model — while MCP's enterprise-auth layer hardens into a standard. Closer to home, Chevron locks in five more years of WA gas for Alinta, and the ASX pushed higher on softer US inflation.</p>
+  <div class="wx"><span class="ic">☁</span><span>Melbourne <span class="sep">·</span> <b>11°</b> <span class="sep">·</span> Overcast <span class="sep">·</span> H 15° L 10°</span></div>
+
+  <p class="greet">Good morning, <b>Jacko</b>. The frontier keeps moving — OpenAI's GPT-5.6 (Sol/Terra/Luna) is now ChatGPT's default and ships alongside "ChatGPT Work", while Anthropic pushes into classrooms. In your lane, a governed-memory rival (AgentPrizm) just launched with audit receipts. Closer to home, Chevron locks in five more years of WA gas for Alinta from 2027, the ASX 200 tapped 8,841 on a mining-led session, and Macquarie turned bearish on AGL.</p>
 
   <button id="motionBtn" onclick="enableMotion()" title="Enable floating" aria-label="Enable floating motion">✨</button>
 
   <section class="snippet">
     <div class="lbl">Daily Technical Snippet</div>
-    <h2>What is hybrid search?</h2>
-    <p>Hybrid search runs two retrievers at once and fuses their scores: a classic keyword engine (<b>BM25</b>) that rewards exact term matches, and a <b>dense vector</b> engine that captures meaning. Keyword search nails names, IDs, and rare jargon that embeddings blur; vectors catch paraphrases that keyword search misses entirely. For a URL-first memory product, fusing both is what stops "the exact page I saved" from vanishing just because I phrased the query differently.</p>
+    <h2>What is contextual retrieval?</h2>
+    <p>Contextual retrieval fixes RAG's weakest link. A chunk ripped out of a document loses the context that made it findable, so before embedding each chunk you prepend a short LLM-written blurb that situates it (<i>"From Alinta's FY26 report; this covers WA gas contracts…"</i>). Anthropic reported it cuts failed retrievals by up to <b>~49%</b> when paired with reranking.</p>
     <details>
       <summary>Learn more</summary>
-      <p>Pure vector search has a well-known failure mode: ask for an exact product code, error string, or surname and cosine similarity happily returns "semantically nearby" junk while the exact match sits at rank 30. BM25 — a decades-old sparse, term-frequency method — gets those right but is blind to synonyms and intent. <b>Hybrid search</b> queries both indexes and merges the ranked lists, most commonly with <b>Reciprocal Rank Fusion (RRF)</b>, which combines by <i>rank position</i> rather than raw scores, so you don't have to normalise two incompatible scales. The usual pipeline is: retrieve wide with hybrid → fuse with RRF → optionally rerank the top slice with a cross-encoder → feed the model. For Kepler, hybrid is the cheap, high-leverage upgrade: it directly improves recall on the "find the specific URL I meant" queries that a memory product lives or dies on.</p>
-      <p><a href="https://www.pinecone.io/learn/hybrid-search-intro/" onclick="return openLink(this)">→ Pinecone's intro to hybrid search</a></p>
+      <p>Standard RAG splits documents into chunks, embeds each, and retrieves by similarity — but a chunk like "the company secured 46 PJ" is ambiguous once separated from "Alinta" and "gas". <b>Contextual retrieval</b> asks a cheap model to write a 1–2 sentence context for each chunk <i>against the whole document</i>, prepends it, then indexes both the contextual text (dense embeddings) and a contextual <b>BM25</b> (sparse) — hybrid search on better inputs. Anthropic measured retrieval-failure drops of ~35% (contextual embeddings) rising to ~49% once you rerank the top slice. For Kepler it's the natural upgrade on top of hybrid search: cheap at index time, and it directly rescues the "I saved that exact page but the chunk lost its anchor" failure a URL-first memory can't afford.</p>
+      <p><a href="https://www.anthropic.com/news/contextual-retrieval" onclick="return openLink(this)">→ Anthropic: Introducing Contextual Retrieval</a></p>
     </details>
   </section>
 
@@ -149,14 +159,14 @@
         <div class="face front">
           <div class="band">Top Story · AI &amp; Agents</div>
           <div class="cbody"><div class="inner-pad">
-            <h2 class="fhead">The mid-July frontier reshuffle: GPT-5.6 is now default, and Meta starts charging for its own model</h2>
-            <p>OpenAI's GPT-5.6 family (Sol, Terra, Luna) is now live as ChatGPT's default; Anthropic's Sonnet 5 ships at near-Opus quality on introductory $2/$10 pricing; Google is selling Gemini Enterprise "agent fleets" rather than a chatbot; and Meta, for the first time, is charging developers to use its Muse Spark model via a new Meta Model API.</p>
-            <div class="src"><span class="badge v">✓ 14 Jul</span> <span class="dot"></span> Build Fast with AI <span class="dot"></span> <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-14-2026" onclick="return openLink(this)">Read source ↗</a></div>
+            <h2 class="fhead">OpenAI ships the GPT-5.6 family — now ChatGPT's default — plus "ChatGPT Work"</h2>
+            <p>OpenAI launched GPT-5.6 as a three-tier lineup — Sol (flagship reasoning/coding), Terra (mid) and Luna (budget) — leading on token efficiency (Altman cited "54% more" in coding) and pricing pitched to undercut rivals. It shipped simultaneously with ChatGPT Work, an enterprise agentic assistant aimed at business documentation and workflow tasks.</p>
+            <div class="src"><span class="badge v">✓ 9 Jul 2026</span> <span class="dot"></span> TechCrunch <span class="dot"></span> <a href="https://techcrunch.com/2026/07/09/openai-launches-its-new-family-of-models-with-gpt-5-6/" onclick="return openLink(this)">Read source ↗</a></div>
             <div class="actions">
               <span class="lbl">Tune tomorrow:</span>
               <button class="up" onclick="tog(event,this)">👍 More</button>
               <button class="down" onclick="tog(event,this)">👎 Less</button>
-              <button class="share" onclick="share(event,'Mid-July AI frontier: GPT-5.6 default, Meta starts charging for its own model','https://www.buildfastwithai.com/blogs/ai-news-today-july-14-2026')">Share ↗</button>
+              <button class="share" onclick="share(event,'OpenAI ships GPT-5.6 (Sol/Terra/Luna) as ChatGPT default, plus ChatGPT Work','https://techcrunch.com/2026/07/09/openai-launches-its-new-family-of-models-with-gpt-5-6/')">Share ↗</button>
               <button class="why" onclick="flip(event,this)">Why it matters ⟳</button>
             </div>
           </div></div>
@@ -164,7 +174,7 @@
         <div class="face back">
           <div class="hband">Why it matters — for you, Jacko</div>
           <div class="inner-pad">
-            <p>Two moves matter for Kepler. Sonnet 5's introductory $2/$10 pricing keeps pushing the cost floor of context-heavy retrieval down — good for a memory product's unit economics. And Meta charging for its model signals the "free open weights" era is closing, so the application layer's leverage is retrieval and context quality, not the base model. Google selling agent <i>fleets</i> is the clearest tell that whoever owns the memory those agents read from owns the durable position.</p>
+            <p>Two things bite for Kepler. Cheaper, more token-efficient frontier models keep pushing down the cost floor of context-heavy retrieval — good for a memory product's unit economics. And "ChatGPT Work" is precisely the assistant-lives-in-your-workflow pattern Kepler must differentiate against: the defensible ground is user-owned, URL-grounded, auditable memory, not another agentic wrapper. For the Alinta decision, this is the reference point for what enterprise agent tooling now looks like out of the box.</p>
             <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
           </div>
         </div>
@@ -178,13 +188,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">MCP's enterprise auth layer goes stable</h3>
-          <p>The Model Context Protocol team promoted its Enterprise-Managed Authorisation (EMA) extension to stable — one sign-in gives users access to every org-approved MCP server, killing the per-server consent prompt. Anthropic (Claude, Claude Code, Cowork), Microsoft and Okta are already on board; Asana, Atlassian, Canva, Figma, Linear and Supabase support it server-side.</p>
-          <div class="src"><span class="badge c">Context · 6 Jul</span> <span class="dot"></span> InfoQ <span class="dot"></span> <a href="https://www.infoq.com/news/2026/07/mcp-ema-enterprise-auth/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'MCP Enterprise-Managed Authorization goes stable','https://www.infoq.com/news/2026/07/mcp-ema-enterprise-auth/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">Anthropic launches "Claude for Teachers"</h3>
+          <p>Anthropic released a free Claude tier for verified US K-12 educators, with curriculum-aligned "teaching skills" and student data excluded from model training — joining OpenAI and Google in the fight for classrooms. The launch drew immediate privacy and learning-outcome scrutiny.</p>
+          <div class="src"><span class="badge v">✓ 14 Jul 2026</span> <span class="dot"></span> Chalkbeat <span class="dot"></span> <a href="https://www.chalkbeat.org/2026/07/14/anthropic-launches-claude-for-teachers-as-ai-companies-battle-for-classrooms/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Anthropic launches Claude for Teachers','https://www.chalkbeat.org/2026/07/14/anthropic-launches-claude-for-teachers-as-ai-companies-battle-for-classrooms/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>MCP going enterprise-grade is the ballgame for a context product: if Kepler exposes an MCP server, EMA is how it gets into a company's approved-tools list with zero per-user friction — a real distribution unlock. The flip side is table stakes: buyers will now expect single-sign-on-grade auth, so it belongs on the roadmap, not the backlog. Being early on the emerging standard is cheaper than retrofitting it.</p>
+          <p>The interesting part isn't education — it's the packaging. The labs are shipping vertical "skills" and domain context bolted onto the base model, which is exactly the layer Kepler competes on. It's a read on Anthropic's productization tempo: skills + curated context are becoming the unit of differentiation, so a memory product needs a crisp story for how its context beats a lab's bundled one.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -192,13 +202,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">MCP's security bill comes due</h3>
-          <p>July brought the NSA's official MCP hardening guidance and fresh auto-execution vulnerabilities in agent tooling. Researchers scanning 10,000+ real-world MCP servers found credentials, API keys and PII leaking at rates above 10% — the ecosystem's growth is outrunning its guardrails.</p>
-          <div class="src"><span class="badge c">Context · Jul</span> <span class="dot"></span> Adversa AI <span class="dot"></span> <a href="https://adversa.ai/blog/top-mcp-security-resources-july-2026/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'MCP security: 10%+ of servers leak credentials, NSA issues hardening guidance','https://adversa.ai/blog/top-mcp-security-resources-july-2026/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">Microsoft Research unveils "Memora" agent memory</h3>
+          <p>Microsoft Research's Memora separates <i>what</i> is stored from <i>how</i> it's retrieved, using "primary abstractions" plus context-aware retrieval tags ("cue anchors") to cut token usage by up to 98% while matching full-context accuracy — a direct move on the agent long-term-memory problem.</p>
+          <div class="src"><span class="badge b">Background · Jun 2026</span> <span class="dot"></span> InfoWorld · 30 Jun <span class="dot"></span> <a href="https://www.infoworld.com/article/4191031/microsoft-unveils-memora-to-tackle-ai-agents-memory-problem.html" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Microsoft Research unveils Memora agent memory (up to 98% token reduction)','https://www.infoworld.com/article/4191031/microsoft-unveils-memora-to-tackle-ai-agents-memory-problem.html')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>When the buyer conversation shifts from "can it connect" to "can I trust what it connects to," a memory/context product that leads with provenance, least-privilege scopes and clean audit trails has a real wedge. It's also the exact risk an Alinta "Head of tech" would inherit — plugging agents into a regulated utility without an MCP security story is how you make the front page for the wrong reason.</p>
+          <p>This is a head-on hit to Kepler's core thesis — memory + retrieval — from Microsoft Research, not a startup. The "store vs. retrieve separation" and cue-anchor design are worth studying as both threat and architecture to borrow. Kept as background (two-plus weeks old), but it's the most Kepler-relevant piece in the AI feed: the big labs now treat durable, cheap memory as a first-class problem.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -211,13 +221,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">ChatGPT's "Dreaming" memory now rewrites itself</h3>
-          <p>OpenAI's Dreaming memory system synthesises a running model of you from many conversations — no "remember this" needed — and self-updates over time ("going to Singapore in July" becomes "went to Singapore in July 2026" after the trip). OpenAI claims factual recall jumped from 41.5% (2024) to 82.8% (2026), with a rollout expanding to Free and Go users.</p>
-          <div class="src"><span class="badge c">Context · Jun</span> <span class="dot"></span> OpenAI <span class="dot"></span> <a href="https://openai.com/index/chatgpt-memory-dreaming/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'ChatGPT Dreaming memory self-updates; recall 41.5%->82.8%','https://openai.com/index/chatgpt-memory-dreaming/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">AgentPrizm launches "governed" agent memory with audit receipts</h3>
+          <p>AgentPrizm publicly launched AgentMemory + AgentSkills — a REST API and remote MCP memory server giving agents persistent, confidence-scored memory with fact-validity windows, contradiction handling, hybrid semantic + keyword recall, plus "audit receipts" and GDPR-style verifiable deletion. The pitch: traceable recall instead of opaque context stuffing.</p>
+          <div class="src"><span class="badge v">✓ 9 Jul 2026</span> <span class="dot"></span> Digital Journal / Access Newswire <span class="dot"></span> <a href="https://www.digitaljournal.com/pr/news/access-newswire/agentprizm-launches-governed-ai-agent-1203883901.html" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'AgentPrizm launches governed AI-agent memory with audit receipts','https://www.digitaljournal.com/pr/news/access-newswire/agentprizm-launches-governed-ai-agent-1203883901.html')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>This is the incumbent walking straight into Kepler's category: passive, self-maintaining memory built into the assistant most people already use. The defensible ground is what OpenAI's model is <i>not</i> — user-controlled, URL-grounded, auditable memory where I decide what's stored and can point at the exact source. "Self-rewriting" also raises a trust question (what if it rewrites wrong?) that a provenance-first product can turn into positioning.</p>
+          <p>This is the freshest thing in your exact lane, and it signals where the category is differentiating: trust and provable recall — confidence scores, validity windows, audit trails — not just "we remember stuff." Kepler's URL-first retrieval should have a sharp answer to "can I see, trust and edit what you recalled, and why." Shipping over remote MCP is also the distribution pattern to match.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -225,13 +235,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Recall 2.0 pitches itself as a "context engine"</h3>
-          <p>Recall's latest positions it against NotebookLM and ChatGPT as a persistent, cross-topic knowledge layer — a "lifelong" store built from everything you save, connecting information across subjects inside chat rather than per-project notebooks. It's the clearest direct articulation yet of the second-brain-as-context-layer thesis.</p>
-          <div class="src"><span class="badge c">Trend · Jul</span> <span class="dot"></span> BizRescuePro <span class="dot"></span> <a href="https://bizrescuepro.com/recall-2-0-ai-context-layer/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Recall 2.0 positions as a lifelong context engine vs NotebookLM','https://bizrescuepro.com/recall-2-0-ai-context-layer/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">ChatGPT "Dreaming": memory that rewrites itself</h3>
+          <p>OpenAI replaced ChatGPT's static saved-memories list with "Dreaming," a background process that reads across years of chats and continuously rewrites what it knows about you (updating "going to Singapore in July" to "went to Singapore in July 2026"). Reported factual recall jumped to ~82.8%, with "memory sources" showing what informed each answer.</p>
+          <div class="src"><span class="badge b">Background · Jun 2026</span> <span class="dot"></span> OpenAI · 4 Jun <span class="dot"></span> <a href="https://openai.com/index/chatgpt-memory-dreaming/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'ChatGPT Dreaming memory self-updates; recall ~82.8%','https://openai.com/index/chatgpt-memory-dreaming/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Recall is the closest analog to Kepler's pitch, so its messaging is worth studying and differentiating against. Its wedge is "save anything, connect everything"; Kepler's sharper claim is URL-first ingestion plus retrieval/rerank precision — depth of grounding over breadth of capture. Watch whether Recall leans into agent/MCP integration next; that's the lane where category leadership will actually be decided.</p>
+          <p>The standing threat to a "second brain": the default assistant now silently builds and maintains a persistent model of the user, straight into Kepler's category. The defensible ground is what Dreaming is <i>not</i> — user-controlled, URL-grounded, auditable memory you can point at a source and edit. "Self-rewriting" also raises a trust question (what if it rewrites wrong?) a provenance-first product can turn into positioning. A month old, so: background, not news.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -244,13 +254,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Australian VC keeps its pace — $1.77B through June</h3>
-          <p>Australia raised ~$1.77B across 82 equity rounds through June 2026, up on the prior year. Early July added Southern Launch ($25m Series A), MAKO ($28m Series A) and a pre-seed for Fluent. Top sectors: vertical B2B software, hardware/robotics and space &amp; defence — with Melbourne singled out for repeat company-building.</p>
-          <div class="src"><span class="badge c">Context · Jul</span> <span class="dot"></span> mean.ceo <span class="dot"></span> <a href="https://blog.mean.ceo/startups-australia-news-july-2026/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Australian VC: $1.77B raised through June 2026','https://blog.mean.ceo/startups-australia-news-july-2026/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">Three Aussie startups raise ~$20M this week — Gridcog leads with $13.5M</h3>
+          <p>Energy-modelling startup Gridcog raised an oversubscribed $13.5M Series A led by ABB Electrification Ventures (with Axpo, Verbund and DNV Ventures) to grow internationally. The same weekly roundup logged fintech LendUS ($5M seed, Carthona Capital) and waste-to-energy Wildfire Energy ($2M equity from Qantas/Airbus plus a $3.15M ARENA grant).</p>
+          <div class="src"><span class="badge v">✓ 10 Jul 2026</span> <span class="dot"></span> SmartCompany <span class="dot"></span> <a href="https://www.smartcompany.com.au/startupsmart/three-aussie-startups-raised-19-5-million-this-week/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Gridcog leads a ~$20M week for Aussie startups with a $13.5M Series A','https://www.smartcompany.com.au/startupsmart/three-aussie-startups-raised-19-5-million-this-week/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Local capital is flowing, but note where: vertical software and hardware, not horizontal AI tools. For a Kepler raise, the read-through is that AU investors want a specific, defensible wedge and a named market — "URL-first memory for X" beats "AI memory for everyone." Melbourne being called out for repeat founders is a genuine home-turf advantage worth leaning on for talent and intros.</p>
+          <p>A live pulse of what's actually clearing in the AU market this month: strategic/corporate VCs (ABB, Qantas/Airbus) and local funds (Carthona) writing Series A and seed cheques. Useful benchmark for round sizes and lead-investor appetite as you plan Kepler's raise — and Gridcog sitting in energy-modelling is a neat reminder that the Alinta-adjacent data market is itself venture-backed.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -258,13 +268,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Victoria funds nine AI &amp; deeptech pre-accelerators</h3>
-          <p>The Victorian Government put $3.5m behind nine AI and deeptech pre-accelerator programs, aimed at earlier-stage commercialisation across the state's healthtech, fintech and software base — reinforcing Melbourne's pitch as the country's deeptech-building hub.</p>
-          <div class="src"><span class="badge c">Context · Jun</span> <span class="dot"></span> This Week in Australian Startups <span class="dot"></span> <a href="https://news.harisq.com/p/this-week-in-australian-startups-142" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Victoria funds nine AI and deeptech pre-accelerator programs','https://news.harisq.com/p/this-week-in-australian-startups-142')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">AI-memory startup Engram exits stealth: $98M at a $600M valuation</h3>
+          <p>Engram raised $98M at a $600M valuation — led by Kleiner Perkins, General Catalyst and Sequoia — to build a "learned memory layer" that separates a model's reasoning from its memory. The 13-person, sub-one-year-old company (out of Stanford) already lists Notion, Microsoft and Harvey as customers, claiming comparable output with up to 100x fewer tokens.</p>
+          <div class="src"><span class="badge b">Background · Jun 2026</span> <span class="dot"></span> Calcalist · 23 Jun <span class="dot"></span> <a href="https://www.calcalistech.com/ctechnews/article/skoqbrumze" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'AI-memory startup Engram exits stealth: $98M at $600M valuation','https://www.calcalistech.com/ctechnews/article/skoqbrumze')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>State money into early-stage AI lowers the cost of ecosystem-building right where you are — useful whether you're recruiting for Kepler or scouting the local talent pool from an Alinta seat. It also signals the Victorian government sees AI/deeptech as strategic, which tends to precede grants, procurement openness and partnership appetite that a growth lead can tap.</p>
+          <p>The single most on-thesis funding story for Kepler: top-tier US VCs paying unicorn-adjacent prices for a memory-layer bet with a tiny team and marquee logos. It's a valuation anchor and appetite signal you can cite when framing Kepler's URL-first pitch. Three weeks old — flagged as background — but it's the comparable, so it earns its place.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -277,13 +287,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">ASX 200 climbs to 8,841 on softer US inflation</h3>
-          <p>The benchmark closed Wednesday up 0.37% at 8,841.1, with more sectors green than red after cooler US inflation eased rate worries and lifted Wall Street. Miner Kingsgate led, up 15.9% on production guidance; energy shares slipped 0.57% and gold miners fell 0.95%.</p>
-          <div class="src"><span class="badge v">✓ 15 Jul</span> <span class="dot"></span> The Motley Fool AU <span class="dot"></span> <a href="https://www.fool.com.au/2026/07/15/5-things-to-watch-on-the-asx-200-on-wednesday-15-july-2026/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'ASX 200 climbs to 8,841 on softer US inflation','https://www.fool.com.au/2026/07/15/5-things-to-watch-on-the-asx-200-on-wednesday-15-july-2026/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">ASX 200 climbs to 8,841 on a mining-led session</h3>
+          <p>The S&amp;P/ASX 200 finished at 8,841.1, up 0.37%, its best sector Materials (+1.7%) as iron ore pushed above US$100/t and copper rallied. BHP jumped ~4% — its biggest one-day gain in months — on a Chilean storm threatening copper supply; Communications (−1.2%) and gold miners (−0.95%) lagged.</p>
+          <div class="src"><span class="badge v">✓ 15 Jul 2026</span> <span class="dot"></span> The Motley Fool AU <span class="dot"></span> <a href="https://www.fool.com.au/2026/07/15/here-are-the-top-10-asx-200-shares-today-15-july-2026/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'ASX 200 climbs to 8,841 on a mining-led session (BHP +4%)','https://www.fool.com.au/2026/07/15/here-are-the-top-10-asx-200-shares-today-15-july-2026/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>A green tape on a softer-inflation read is a modestly friendlier backdrop for risk assets — worth noting for the timing of any local Kepler raise, even if one session is just weather, not climate. And if you take the Alinta role, energy slipping on an up day is your reminder that sector sentiment moves independently of the index; utility tape is part of the job.</p>
+          <p>The benchmark is near record territory but carried by resources, not banks or tech — a useful read on where equity risk appetite actually sits as you weigh the Alinta move against building Kepler. When the index is a mining tape, energy and small-cap tech sentiment can move independently, so don't read one green day as a green light for a local raise.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -291,13 +301,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">RBA still holding at 4.35%</h3>
-          <p>The Reserve Bank has left the cash rate at 4.35% after three increases earlier in 2026, judging conditions tight enough while it watches the lagged effect of those hikes and an oil-supply shock. Inflation remains uncomfortably firm — a higher-for-longer backdrop for Australian borrowers and businesses.</p>
-          <div class="src"><span class="badge c">Context · Jun</span> <span class="dot"></span> CommBank Newsroom <span class="dot"></span> <a href="https://www.commbank.com.au/articles/newsroom/2026/06/reserve-bank-june-2026-rates-decision.html" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'RBA holds cash rate at 4.35%','https://www.commbank.com.au/articles/newsroom/2026/06/reserve-bank-june-2026-rates-decision.html')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">Macquarie cuts AGL to "underperform" on cheap power</h3>
+          <p>AGL fell ~5% to about $8.01 after Macquarie downgraded it to underperform and cut its price target 12% to AU$7.75, citing wholesale electricity near five-year lows and an oversupplied market. It pushed a price recovery out to FY31 and slashed FY28/FY29 earnings estimates; utilities were the day's worst ASX sector, Origin −1.4%.</p>
+          <div class="src"><span class="badge v">✓ 13 Jul 2026</span> <span class="dot"></span> The Motley Fool AU <span class="dot"></span> <a href="https://www.fool.com.au/2026/07/13/why-this-asx-200-energy-stock-is-crashing-5-on-monday/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Macquarie cuts AGL to underperform on oversupplied power market','https://www.fool.com.au/2026/07/13/why-this-asx-200-energy-stock-is-crashing-5-on-monday/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Rates parked at 4.35% with sticky inflation means capital stays expensive — a growth-stage startup should plan a longer, more disciplined runway rather than banking on a cheap-money sprint. For the Alinta decision, firm inflation keeps energy prices politically charged, which is precisely the environment a utility tech leader operates in day to day.</p>
+          <p>This is the most Alinta-relevant tape on the page: a top broker turning bearish on generator-retailer earnings because wholesale power is structurally cheap — mild weather, batteries, wind/solar and delayed coal closures. That's margin pressure across the exact sector Alinta operates in, worth pricing into how you read the near-term outlook of a "Head of tech" role there.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -310,13 +320,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">PLG 2.0: now you're onboarding agents too</h3>
-          <p>Product-led growth has become a motion where the product drives acquisition and retention whether the end user is a human <i>or an AI agent</i>. ~58% of B2B SaaS now run some PLG, and 91% plan to spend more — but only a third track activation. The new benchmark: value in ~60 seconds, often before account creation.</p>
-          <div class="src"><span class="badge c">Trend report</span> <span class="dot"></span> Userpilot <span class="dot"></span> <a href="https://userpilot.com/blog/product-led-growth/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'PLG 2.0: onboarding agents, value in 60 seconds','https://userpilot.com/blog/product-led-growth/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">Generative Engine Optimization goes mainstream</h3>
+          <p>GEO / AI-visibility has hardened into a real martech category, with eight named platforms now competing (Profound, Scrunch AI, Otterly.AI, Peec AI and more). A CiteLens benchmark found AI engines cite wildly different sources — Google AI Mode and Perplexity pull ~90% of citations from Google's top-10, but ChatGPT only ~30% — so classic SEO no longer decides whether a brand shows up in AI answers.</p>
+          <div class="src"><span class="badge v">✓ 9 Jul 2026</span> <span class="dot"></span> MarTech Series <span class="dot"></span> <a href="https://martechseries.com/predictive-ai/ai-platforms-machine-learning/generative-engine-optimization-goes-mainstream-the-2026-ai-visibility-landscape/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Generative Engine Optimization goes mainstream: the 2026 AI-visibility landscape','https://martechseries.com/predictive-ai/ai-platforms-machine-learning/generative-engine-optimization-goes-mainstream-the-2026-ai-visibility-landscape/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>"Agents as users" is a concrete Kepler growth play: expose an MCP server and an agent can adopt Kepler mid-task without a human ever seeing an onboarding screen — a genuinely new acquisition surface. The activation gap (91% invest, a third measure) is your edge — instrument time-to-first-value now, because the sub-60-second bar rewards products that prove retrieval quality before signup.</p>
+          <p>If buyers — human or agent — increasingly ask an LLM instead of searching, being readable and citable to models becomes the new top of funnel, and Kepler's URL-first context is exactly the substrate that makes a brand legible to those systems. The emerging bot-log analytics (tracking GPTBot, ClaudeBot, PerplexityBot) even points at a concrete activation metric Kepler could surface: is AI actually reading you, and what did it retain?</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -324,13 +334,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Agentic martech crosses from pilot to production</h3>
-          <p>Agentic systems are moving from experiments to live deployments across media buying, revenue intelligence, AI-search optimisation and e-commerce infrastructure — with named clients and measurable workflows, not demos. The marketing stack itself is being rebuilt around autonomous agents.</p>
-          <div class="src"><span class="badge c">Trend · Jul</span> <span class="dot"></span> MarTech <span class="dot"></span> <a href="https://martech.org/the-latest-ai-powered-martech-news-and-releases/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Agentic martech crosses from pilot to production','https://martech.org/the-latest-ai-powered-martech-news-and-releases/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">PLG in the agentic era: the moat becomes proprietary context</h3>
+          <p>A widely-cited framing splits product-led growth into 1.0 (user-led), 2.0 (agentic) and 3.0 (headless): as the "user" shifts from human to agent, time-to-value compresses from ~10 minutes to ~60 seconds, activation is redefined as "first successful output," and the moat moves from UI to proprietary context delivered via APIs/MCP. Netlify already reports ~80% of signups coming from AI agents.</p>
+          <div class="src"><span class="badge b">Background · Apr 2026</span> <span class="dot"></span> Userpilot · 30 Apr <span class="dot"></span> <a href="https://userpilot.com/blog/product-led-growth/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'PLG in the agentic era: the moat becomes proprietary context','https://userpilot.com/blog/product-led-growth/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>If marketing agents are going live with real budgets, they need reliable, cited context about a brand, its URLs and its past campaigns — exactly Kepler's shape. Position Kepler as the memory layer those martech agents read from, and "AI-search optimisation" doubles as a distribution channel: make Kepler's own content the material the answer engines quote.</p>
+          <p>This is Kepler's thesis stated as a growth playbook — "the moat is proprietary context," "agents are the users" — with borrowable metrics: agent-signup share, first-successful-output as activation, MCP-native onboarding. It's flagged honestly as April: a standing reference, not fresh news. Expose Kepler as an MCP server and an agent can adopt it mid-task with no human onboarding screen — a genuinely new acquisition surface.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -344,12 +354,12 @@
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
           <h3 class="fhead">Chevron locks in 46 PJ of WA gas for Alinta from 2027</h3>
-          <p>Chevron Australia signed a new five-year deal to supply Alinta Energy 46 petajoules of Western Australian gas from July 2027, sourced across Gorgon, Wheatstone and the North West Shelf. CEO Jeff Dimery framed it as continuity of a long partnership securing reliable WA supply — the freshest confirmed Alinta-specific item.</p>
-          <div class="src"><span class="badge v">✓ 14 Jul</span> <span class="dot"></span> ESD News <span class="dot"></span> <a href="https://esdnews.com.au/chevron-signs-gas-supply-deal-with-alinta-energy/" onclick="return openLink(this)">Source ↗</a></div>
+          <p>Chevron Australia signed a new five-year deal to supply Alinta Energy 46 petajoules of Western Australian gas from July 2027, sourced from its equity in Gorgon, Wheatstone and the North West Shelf. It extends a four-decade relationship and underpins Alinta's position as one of WA's largest gas retailers — the freshest hard signal on Alinta's operational footing.</p>
+          <div class="src"><span class="badge v">✓ 14 Jul 2026</span> <span class="dot"></span> ESD News <span class="dot"></span> <a href="https://esdnews.com.au/chevron-signs-gas-supply-deal-with-alinta-energy/" onclick="return openLink(this)">Source ↗</a></div>
           <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Chevron signs 46 PJ five-year WA gas deal with Alinta from 2027','https://esdnews.com.au/chevron-signs-gas-supply-deal-with-alinta-energy/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Contracting five years of gas from 2027 shows Alinta's firming/generation side is planning for the long haul — the kind of stability that matters if you're joining to modernise its tech stack. Through the Kepler lens, energy's data problems — trading, demand forecasting, grid and gas-nomination ops — are a big adjacent market for context and agent tooling, and this deal is a reminder those workflows run on decade-long horizons.</p>
+          <p>Contracting five years of feedstock from 2027 shows Alinta's retail/generation side securing its supply chain right as ownership transitions — a company planning to build, not wind down. Through the Kepler lens, energy's data problems — gas nominations, demand forecasting, trading, grid ops — are a big adjacent market for context and agent tooling, and this deal is a reminder those workflows run on decade-long horizons.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -357,13 +367,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Sembcorp's AU$6.5B takeover of Alinta is now official</h3>
-          <p>Singapore's Sembcorp completed its AU$6.5B (US$4.32B) acquisition of Alinta from Chow Tai Fook in June, adding a 10.4GW Australian development pipeline. CEO Jeff Dimery stays on to lead — a well-capitalised parent with an explicit growth-and-transition mandate, not a run-off owner.</p>
-          <div class="src"><span class="badge c">Context · 11 Jun</span> <span class="dot"></span> Energy-Storage.news <span class="dot"></span> <a href="https://www.energy-storage.news/sembcorp-completes-us4-32-billion-acquisition-of-alinta-energy-adds-10-4gw-australian-pipeline/" onclick="return openLink(this)">Source ↗</a></div>
+          <h3 class="fhead">Sembcorp's AU$6.5B takeover of Alinta is complete</h3>
+          <p>Singapore's Sembcorp completed its AU$6.5B (US$4.32B) purchase of Alinta from Chow Tai Fook, folding a 3.4GW operating portfolio and 10.4GW development pipeline into its Renewables East arm. CEO Jeff Dimery and the management team stay on — a well-capitalised parent with an explicit growth-and-transition mandate, not a run-off owner.</p>
+          <div class="src"><span class="badge b">Background · Jun 2026</span> <span class="dot"></span> Energy-Storage.news · 11 Jun <span class="dot"></span> <a href="https://www.energy-storage.news/sembcorp-completes-us4-32-billion-acquisition-of-alinta-energy-adds-10-4gw-australian-pipeline/" onclick="return openLink(this)">Source ↗</a></div>
           <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Sembcorp completes AU$6.5B Alinta acquisition; Dimery stays','https://www.energy-storage.news/sembcorp-completes-us4-32-billion-acquisition-of-alinta-energy-adds-10-4gw-australian-pipeline/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>This is the single most decision-relevant item on the page. A "Head of tech" role now sits inside a parent with deep pockets and a 10.4GW pipeline to build — renewables and storage — which is exactly where a tech leader's leverage (forecasting, trading, grid data, agents) lands. Dimery staying signals continuity over upheaval: you'd be building on a stable base with a growth mandate, not firefighting a distressed asset.</p>
+          <p>The single most decision-relevant context for the role — kept as clearly-dated background because it completed in June, not this week. A "Head of tech" seat now sits inside a parent with deep pockets and a 10.4GW pipeline to build (renewables + storage), exactly where a tech leader's leverage — forecasting, trading, grid data, agents — lands. Dimery staying signals continuity over upheaval: a stable base with a growth mandate.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -371,13 +381,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Rivals adjust: bills ease and "Solar Sharer" arrives</h3>
-          <p>From 1 July, AGL, Origin and EnergyAustralia must offer an opt-in "Solar Sharer" tariff (smart-meter required), while new rules cap price rises to once a year and limit individual line items like daily supply charges. For most customers, bills are flat-to-lower — falling ~$216/yr in SE Queensland.</p>
-          <div class="src"><span class="badge c">Context · Jul</span> <span class="dot"></span> lenergy.com.au <span class="dot"></span> <a href="https://lenergy.com.au/are-agl-origin-energyaustralia-prices-going-up-july-2026/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Solar Sharer tariff and new consumer protections hit AGL, Origin, EnergyAustralia','https://lenergy.com.au/are-agl-origin-energyaustralia-prices-going-up-july-2026/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">Canberra adds 4GWh+ of battery storage to its priority list</h3>
+          <p>The federal government added one transmission and 11 generation/storage projects to its National Renewable Energy Priority List, adding 4GWh+ of battery capacity — including Origin's Yanco Delta (800MWh), Ark Energy's Bowmans Creek (2,414MWh) and Goldwind's Coppabella BESS. If all proceed, the list points to ~10GW storage and ~20GW generation.</p>
+          <div class="src"><span class="badge v">✓ 15 Jul 2026</span> <span class="dot"></span> Energy-Storage.news <span class="dot"></span> <a href="https://www.energy-storage.news/over-4gwh-of-battery-storage-added-to-australias-updated-national-renewable-energy-priority-list/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Australia adds 4GWh+ of battery storage to its renewable priority list','https://www.energy-storage.news/over-4gwh-of-battery-storage-added-to-australias-updated-national-renewable-energy-priority-list/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Tighter tariff rules and mandatory smart-meter solar offers push retailers toward more data-intensive, personalised billing and load management — the kind of program that needs modern tech and, plausibly, agents to run at scale. If you take the Alinta seat, this is the regulatory current your roadmap swims in; delivering compliant, customer-friendly digital experiences faster than AGL/Origin is a concrete edge to own.</p>
+          <p>This confirms the structural direction of the market Alinta competes in: dispatchable storage is where the pipeline and policy tailwind sit — and Alinta's own 10.4GW pipeline is fighting for the same approvals lane as Origin. The volume of storage/generation data flooding the grid is precisely the "energy-data-as-market" thesis a Kepler-style context layer could sit on top of.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -387,20 +397,20 @@
   <!-- ===================== QUICK HITS ===================== -->
   <div class="sec-title">Quick Hits</div>
   <ul class="hits">
-    <li><span class="tag">AI</span><span><b>GPT-5.6</b> (Sol/Terra/Luna) is now ChatGPT's default; <b>Meta</b> starts charging for its Muse Spark model. <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-14-2026" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">MCP</span><span><b>Enterprise-Managed Auth</b> goes stable — single sign-in for approved MCP servers. <a href="https://www.infoq.com/news/2026/07/mcp-ema-enterprise-auth/" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Competitor</span><span><b>ChatGPT</b>'s "Dreaming" memory self-updates; <b>Recall 2.0</b> pitches a lifelong context engine. <a href="https://openai.com/index/chatgpt-memory-dreaming/" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Funding</span><span><b>Australia</b> raised ~$1.77B through June; Southern Launch &amp; MAKO close Series As. <a href="https://blog.mean.ceo/startups-australia-news-july-2026/" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Markets</span><span><b>ASX 200</b> +0.37% to 8,841 on softer US inflation; RBA still holds 4.35%. <a href="https://www.fool.com.au/2026/07/15/5-things-to-watch-on-the-asx-200-on-wednesday-15-july-2026/" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Energy</span><span><b>Chevron</b> signs 46 PJ WA gas deal with <b>Alinta</b> from 2027; Sembcorp ownership now official. <a href="https://esdnews.com.au/chevron-signs-gas-supply-deal-with-alinta-energy/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">AI · 9 Jul</span><span><b>OpenAI</b> ships GPT-5.6 (Sol/Terra/Luna) as ChatGPT's default plus "ChatGPT Work". <a href="https://techcrunch.com/2026/07/09/openai-launches-its-new-family-of-models-with-gpt-5-6/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Memory · 9 Jul</span><span><b>AgentPrizm</b> launches governed agent memory with audit receipts; <b>Microsoft Memora</b> (Jun) targets the same problem. <a href="https://www.digitaljournal.com/pr/news/access-newswire/agentprizm-launches-governed-ai-agent-1203883901.html" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Funding · 10 Jul</span><span><b>Gridcog</b> leads a ~$20M AU week with a $13.5M Series A; <b>Engram</b> (Jun) raised $98M at $600M for an AI-memory layer. <a href="https://www.smartcompany.com.au/startupsmart/three-aussie-startups-raised-19-5-million-this-week/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Markets · 15 Jul</span><span><b>ASX 200</b> +0.37% to 8,841 (BHP +4%); <b>Macquarie</b> cut <b>AGL</b> to underperform (13 Jul). RBA cash rate still 4.35% — next call 30 Jul. <a href="https://www.fool.com.au/2026/07/15/here-are-the-top-10-asx-200-shares-today-15-july-2026/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Energy · 14 Jul</span><span><b>Chevron</b> signs a 46 PJ five-year WA gas deal with <b>Alinta</b> from 2027; Sembcorp ownership completed in June. <a href="https://esdnews.com.au/chevron-signs-gas-supply-deal-with-alinta-energy/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Energy · 15 Jul</span><span><b>Canberra</b> adds 4GWh+ of battery storage (Origin's Yanco Delta et al.) to its renewable priority list. <a href="https://www.energy-storage.news/over-4gwh-of-battery-storage-added-to-australias-updated-national-renewable-energy-priority-list/" onclick="return openLink(this)">↗</a></span></li>
   </ul>
 
   <div class="foot">
     <p>👍 <b>More</b> / 👎 <b>Less</b> on any story and tomorrow's edition adjusts to what you rate. Or just tell me "more energy, less markets." Flip any card with <b>Why it matters ⟳</b> for the Kepler / Alinta angle.</p>
-    <p style="font-size:12px;opacity:.85">Honesty note: today's genuinely fresh 24–48h window (Tue 14 → Thu 16 Jul) holds the Chevron–Alinta gas deal (14 Jul), the AI frontier roundup (14 Jul) and the ASX close (15 Jul), tagged <b>✓</b>. MCP EMA (6 Jul), MCP security (Jul), ChatGPT Dreaming (Jun), the Sembcorp completion (11 Jun), the RBA hold (Jun) and the Solar Sharer rules (1 Jul) fall outside that window and are tagged <b>Context</b>. PLG/martech items are <b>Trend reports</b>. Every URL was date-checked; unverified or future-dated stories were dropped.</p>
+    <p style="font-size:12px;opacity:.85">Honesty note: every badge shows the source's <b>real publish date</b>, verified by fetching it today (16 Jul). Genuinely fresh items (last ~72h) are tagged <b>✓</b> with their date — Claude for Teachers (14 Jul), Chevron–Alinta gas (14 Jul), the renewable priority-list update (15 Jul), the ASX close (15 Jul) — alongside recent ones: AgentPrizm &amp; GEO (9 Jul), Macquarie–AGL (13 Jul), the Gridcog-led AU week (10 Jul), GPT-5.6 (9 Jul). Older but load-bearing pieces are labelled <b>Background · month</b> and shown with their true date: ChatGPT Dreaming &amp; Engram (Jun), Microsoft Memora (30 Jun), the Sembcorp–Alinta completion (11 Jun) and the PLG-agentic reference (Apr 2026 — shown as Apr, not disguised as new). No vague "Context" freshness labels. Stale items search tried to pass off as current — a 2025 Origin/Snowy story, a year-old ZeroEntropy round, a post-dated jobs print — were dropped. No fabricated stories, sources or dates.</p>
   </div>
 
-  <div class="stamp">The Daily Dispatch · Thursday 16 July 2026<br>Every story cited &amp; recency-checked · stale items dropped or tagged · flip + float edition</div>
+  <div class="stamp">The Daily Dispatch · Thursday 16 July 2026<br>Every badge is the source's real, fetch-verified date · stale items dropped · flip + float edition</div>
 
 </div>
 <div id="toast">Link copied</div>

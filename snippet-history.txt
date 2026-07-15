@@ -4,3 +4,4 @@ Reranking (retrieve wide, rerank narrow)
 
 Context windows and the lost-in-the-middle problem
 Hybrid search (BM25 + dense vectors)
+Contextual retrieval (prepend chunk context before embedding)
