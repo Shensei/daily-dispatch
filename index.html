@@ -511,6 +511,26 @@
       }catch(err){ toast('Motion unavailable'); }
     };
   })();
+
+  /* ---------- always show the latest edition (beat stale browser cache) ---------- */
+  (function(){
+    try{
+      var months={january:1,february:2,march:3,april:4,may:5,june:6,july:7,august:8,september:9,october:10,november:11,december:12};
+      var m=document.title.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
+      if(!m) return;
+      var mo=months[m[2].toLowerCase()]; if(!mo) return;
+      var edition=m[3]+'-'+('0'+mo).slice(-2)+'-'+('0'+m[1]).slice(-2);
+      var today=new Intl.DateTimeFormat('en-CA',{timeZone:'Australia/Melbourne'}).format(new Date());
+      var q=new URLSearchParams(location.search);
+      /* if the page we loaded is an OLDER edition than today (i.e. served from cache),
+         force one fresh fetch. The 'fresh' guard prevents any reload loop when today's
+         edition simply hasn't been published yet. */
+      if(edition < today && q.get('fresh')!==today){
+        q.set('fresh', today);
+        location.replace(location.pathname + '?' + q.toString());
+      }
+    }catch(e){}
+  })();
 </script>
 </body>
 </html>
