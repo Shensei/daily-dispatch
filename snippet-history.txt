@@ -6,3 +6,4 @@ Context windows and the lost-in-the-middle problem
 Hybrid search (BM25 + dense vectors)
 Contextual retrieval (prepend chunk context before embedding)
 Temporal knowledge graphs (for agent memory)
+Sleep-time compute (offline memory consolidation)
