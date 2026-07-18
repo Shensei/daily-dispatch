@@ -8,3 +8,4 @@ Contextual retrieval (prepend chunk context before embedding)
 Temporal knowledge graphs (for agent memory)
 
 Matryoshka embeddings (nested / adaptive-length embeddings)
+Late-interaction retrieval (ColBERT / multi-vector)
