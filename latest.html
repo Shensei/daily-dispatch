@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Daily Dispatch — 23 July 2026</title>
+<title>The Daily Dispatch — 24 July 2026</title>
 <style>
   :root{
     color-scheme: light;
@@ -139,23 +139,23 @@
   <header class="mast">
     <div class="kick"><span>Personalised Edition</span><span>Melbourne</span></div>
     <h1>The Daily Dispatch</h1>
-    <div class="sub">Thursday, 23 July 2026 · tuned to your interests</div>
+    <div class="sub">Friday, 24 July 2026 · tuned to your interests</div>
   </header>
 
-  <div class="wx"><span class="ic">🌦️</span><span>Melbourne <span class="sep">·</span> <b>10°</b> <span class="sep">·</span> Partly cloudy, a shower or two <span class="sep">·</span> H 14° L 7°</span></div>
+  <div class="wx"><span class="ic">☀️</span><span>Melbourne <span class="sep">·</span> <b>13°</b> <span class="sep">·</span> Sunny, morning mist clearing <span class="sep">·</span> H 13° L 7°</span></div>
 
-  <p class="greet">Good morning, <b>Jacko</b>. The frontier tier stalled while the cheap tier sprinted: <b>Google shipped three Gemini Flash models</b> — halving output prices and pushing its cutoff to March 2026 — even as <b>Pro slipped again</b> and <b>Gemini 4 pretraining began</b>, a fresh reminder that when models commoditise, context is the moat. Agents got a philosophy statement too: <b>Block's open-source Buzz</b> treats them as first-class collaborators on rails no single company owns, while fresh cheques for <b>Interloom and Cognee</b> show “agents without memory are toys” is now a fundable thesis. The money kept pooling in the plumbing — <b>H1 venture hit $510B</b>, ~70% to AI infrastructure — the shelf Kepler sits on. Closer to home, the <b>ASX traded near 8,800</b> through a gold rout, and <b>Chevron locked in a new 46 PJ five-year WA gas deal with Alinta</b>, underpinning the western firming build.</p>
+  <p class="greet">Good morning, <b>Jacko</b>. The agent war moved up the stack: <b>OpenAI shipped Presence</b>, a governance-and-context platform for enterprise agents, opening a four-way fight with Google, Meta and NVIDIA-ServiceNow over who owns the <b>company context layer</b> — the exact tier Kepler sits on. Underneath, the model floor fell again — <b>DeepSeek V4</b> lands today near $0.44/M and <b>Kimi K3</b> opens its weights on Sunday — even as Washington accused <b>Moonshot of distilling Anthropic's Fable</b>, a reminder that provenance and auditability are becoming the trust currency. The money kept pooling in the plumbing: Australia's <b>Firmus raised $505M</b> at a $5.5B valuation for its Melbourne-and-Tasmania AI factories. Closer to home, the <b>ASX firmed to 8,860</b> after a jobs shock revived RBA hike bets, while <b>AEMO pushed its gas-shortfall warning out to 2030</b> as a 30GW battery pipeline reshapes the grid Alinta is building into.</p>
 
   <button id="motionBtn" onclick="enableMotion()" title="Enable floating" aria-label="Enable floating motion">✨</button>
 
   <section class="snippet">
     <div class="lbl">Daily Technical Snippet</div>
-    <h2>Episodic vs semantic memory — the two things agents forget</h2>
-    <p>Human memory comes in two flavours, and agents need both. <b>Semantic memory</b> is facts stripped of context (“Jacko founded Kepler”). <b>Episodic memory</b> is specific, timestamped events (“on 22 Jul the agent read <code>doc-A</code> and chose X”). Most vector stores blend everything into one soup of embeddings — so an agent can't tell a durable fact from a one-off event, and it either forgets what matters or over-remembers noise.</p>
+    <h2>Reciprocal Rank Fusion — blending rankings without tuning weights</h2>
+    <p>Real retrieval rarely rides one index. You run a keyword search, a vector search, maybe a graph query — and now you have three ranked lists that disagree. <b>Reciprocal Rank Fusion (RRF)</b> merges them using only each item's <i>rank</i>, not its raw score: every result scores <code>1/(k + rank)</code> in each list (<code>k</code> a small constant, often 60), and you sum across lists. Items near the top of several lists float up — no score normalisation, no per-retriever weight tuning.</p>
     <details>
       <summary>Learn more</summary>
-      <p>The split comes from cognitive science and is formalised for agents in the <b>CoALA</b> framework, which divides an agent's memory into <b>working, episodic, semantic and procedural</b> stores — each written and read differently. Semantic memory wants deduplication and canonical facts; episodic memory wants an ordered, immutable log you can replay; procedural memory holds <i>how</i> to do a task. Collapsing them into one index is why naive RAG both hallucinates stale “facts” and loses the thread of what just happened. For Kepler this is the whole design argument: episodic memory is where <b>auditability</b> actually lives — a <b>URL-addressable, timestamped event trail</b> of exactly what the agent knew and did at each step, sitting cleanly alongside the durable semantic facts, so “why did it do that?” has an answer you can open.</p>
-      <p><a href="https://arxiv.org/abs/2309.02427" onclick="return openLink(this)">→ Sumers et al., “Cognitive Architectures for Language Agents (CoALA)” (arXiv)</a></p>
+      <p>RRF sidesteps the hardest part of hybrid search: BM25 scores, cosine similarities and graph relevances live on wildly different scales, so naively adding them lets one signal dominate. By throwing away magnitudes and keeping only ordinal rank, RRF is robust, near parameter-free, and easy to reason about — which is why it's the default fusion in <b>Elasticsearch, OpenSearch and most production hybrid stacks</b>. It also degrades gracefully: add or drop a retriever and the maths still holds. For Kepler the appeal is <b>auditability</b> — because fusion is just "which lists ranked this near the top", you can show <i>why</i> a memory surfaced (won on lexical and graph, lost on vector) instead of pointing at an opaque blended score. Explainable retrieval over a <b>user-owned</b> store beats a black-box relevance number.</p>
+      <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/rrf.html" onclick="return openLink(this)">→ Elastic, “Reciprocal rank fusion” (documentation)</a></p>
     </details>
   </section>
 
@@ -166,14 +166,14 @@
         <div class="face front">
           <div class="band">Top Story · AI &amp; Agents</div>
           <div class="cbody"><div class="inner-pad">
-            <h2 class="fhead">Google ships three Gemini Flash models, slips Pro again — and starts its “most ambitious” Gemini 4 run</h2>
-            <p>Google released <b>Gemini 3.6 Flash</b>, <b>3.5 Flash-Lite</b> and a restricted <b>3.5 Flash Cyber</b> on 21 July, while <b>Gemini 3.5 Pro stays unshipped</b> after repeated delays. The flagship Flash cuts output <b>17%</b>, <b>halves output pricing to $7.50/M</b>, and pushes its knowledge cutoff to <b>March 2026</b> — and Google confirmed it has begun its “most ambitious pretraining run yet” for <b>Gemini 4</b>. The frontier tier stalls; the cheap, high-volume tier is where the fight now is.</p>
-            <div class="src"><span class="badge v">✓ 21 Jul 2026</span> <span class="dot"></span> Build Fast with AI <span class="dot"></span> <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026" onclick="return openLink(this)">Read source ↗</a></div>
+            <h2 class="fhead">OpenAI launches Presence — an enterprise agent platform built around company context, permissions and guardrails</h2>
+            <p>OpenAI released <b>Presence</b> on 22 July, a platform that connects AI agents to a company's internal systems through a shared layer of <b>context, policies, permissions, guardrails, actions and evaluations</b> — aimed at customer support, outbound sales and other high-risk workflows, with <b>BBVA, SoftBank and IAG</b> among early names. It reframes the agent race away from raw model IQ and toward who controls the <b>context and governance layer</b> agents run on.</p>
+            <div class="src"><span class="badge v">✓ 22 Jul 2026</span> <span class="dot"></span> Build Fast with AI <span class="dot"></span> <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-23-2026" onclick="return openLink(this)">Read source ↗</a></div>
             <div class="actions">
               <span class="lbl">Tune tomorrow:</span>
               <button class="up" onclick="tog(event,this)">👍 More</button>
               <button class="down" onclick="tog(event,this)">👎 Less</button>
-              <button class="share" onclick="share(event,'Google ships three Gemini Flash models, slips Pro again, and starts its most ambitious Gemini 4 pretraining run','https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026')">Share ↗</button>
+              <button class="share" onclick="share(event,'OpenAI launches Presence, an enterprise agent platform built around company context, permissions and guardrails','https://www.buildfastwithai.com/blogs/ai-news-today-july-23-2026')">Share ↗</button>
               <button class="why" onclick="flip(event,this)">Why it matters ⟳</button>
             </div>
           </div></div>
@@ -181,7 +181,7 @@
         <div class="face back">
           <div class="hband">Why it matters — for you, Jacko</div>
           <div class="inner-pad">
-            <p>For a memory/context founder this is the recurring lesson, now with a price attached: when a capable model costs <b>$1.50/$7.50</b> and refreshes its own cutoff to March 2026, the model stops being the differentiator — what you feed it does. Cheap flash inference everywhere means <i>more</i> agents, each shipping with no memory of its own, which is demand for a portable layer. And the cutoff jump is the tell: freshness is now a feature buyers notice, and a <b>live, URL-addressable memory</b> is how you give any model knowledge newer than its training run. For the Alinta seat the same commoditisation says build on cheap, swappable models and <i>own your context</i> — don't marry a vendor.</p>
+            <p>This is the platform move you have to plan around: the biggest lab is now selling "company context" as a managed layer — the same real estate Kepler claims, wrapped in one vendor's walls. It cuts two ways. It validates the thesis loudly — context, not the model, is the enterprise battleground — and hands you a sharp contrast: Presence is context you <i>rent</i> inside OpenAI; Kepler is context the user <b>owns, addresses by URL, and can audit and port</b> across any model. The risk is default gravity: if buyers accept a lab's context store because it ships in the box, "portable and auditable" has to be a loud, provable wedge, not a footnote. Watch whether Presence speaks <b>MCP</b> — if it does, an MCP-native memory server can sit inside it rather than against it.</p>
             <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
           </div>
         </div>
@@ -195,13 +195,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Block launches Buzz — an open-source agent workspace where agents are first-class collaborators</h3>
-          <p>Block released <b>Buzz</b>, an open-source workspace built on the decentralised <b>Nostr protocol</b> that treats AI agents as <b>first-class collaborators</b> rather than sidebar assistants — a shared environment “no single company controls.” It's the clearest product statement yet of the user-owned, open-rails vision Block has pushed since co-founding the Agentic AI Foundation.</p>
-          <div class="src"><span class="badge v">✓ 21 Jul 2026</span> <span class="dot"></span> Build Fast with AI <span class="dot"></span> <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Block launches Buzz, an open-source Nostr-based agent workspace treating agents as first-class collaborators','https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">DeepSeek V4 lands near $0.44 per million tokens — Kimi K3 opens its weights Sunday</h3>
+          <p><b>DeepSeek V4</b>'s stable release is due <b>today, 24 July</b>, priced around <b>$0.44 per million output tokens</b> — a new floor for cost-conscious teams. Two days later, <b>Moonshot's Kimi K3</b> — a 2.8-trillion-parameter model that topped the Frontend Code Arena — goes to <b>open weights</b>, making a frontier-grade model self-hostable at infrastructure cost.</p>
+          <div class="src"><span class="badge v">✓ 23 Jul 2026</span> <span class="dot"></span> Build Fast with AI <span class="dot"></span> <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-23-2026" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'DeepSeek V4 lands near 0.44 dollars per million tokens as Kimi K3 opens its weights','https://www.buildfastwithai.com/blogs/ai-news-today-july-23-2026')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>This is your worldview shipped by a company with distribution. Decentralised, open-protocol, no-single-owner infrastructure for agents is exactly the ground Kepler stands on — <b>user-owned memory instead of a vendor's black box</b>. Practically it's a tailwind: an open agent workspace needs somewhere open and portable to <i>remember</i>, and “no single company controls it” is a far easier sell next to memory the user actually owns than inside a walled garden. Watch whether Buzz standardises on MCP-style connectors — if it does, being an MCP-native memory server puts you in the toolset by default.</p>
+          <p>The floor keeps dropping, and every drop is an argument for your layer. When capable inference is $0.44/M and a frontier model is free to self-host, the model stops being the moat — what you feed it does. Cheap, swappable, self-hostable models mean <i>more</i> agents, each born amnesiac, which is raw demand for a portable memory tier that outlives whichever model is cheapest this week. For the Alinta seat the same lesson holds in reverse: build on commodity, swappable models and <b>own your context</b> rather than marrying a vendor whose price you can't control.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -209,13 +209,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Claude Cowork turns a screen recording into a reusable skill — learning by demonstration</h3>
-          <p>Anthropic's <b>Claude Cowork</b> now converts <b>screen recordings with voice narration into reusable “skills,”</b> so a workflow is taught by demonstration instead of prompt-engineered. It's a concrete step toward <b>procedural memory</b>: the agent doesn't just know facts, it retains <i>how</i> to do a task and can replay it.</p>
-          <div class="src"><span class="badge v">✓ 21 Jul 2026</span> <span class="dot"></span> Build Fast with AI <span class="dot"></span> <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Claude Cowork turns screen recordings into reusable skills — procedural memory by demonstration','https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">White House accuses Moonshot of distilling Anthropic's Fable to build Kimi K3</h3>
+          <p>OSTP director <b>Michael Kratsios</b> publicly accused <b>Moonshot</b> of "large-scale covert industrial distillation" of Anthropic's <b>Fable</b> model to create Kimi K3, citing cross-entropy analysis showing K3 identifies as Claude unusually often, and alleged it reached restricted <b>Nvidia GB300</b> chips via Thailand. Moonshot has not conceded; no legal finding exists yet.</p>
+          <div class="src"><span class="badge v">✓ 22 Jul 2026</span> <span class="dot"></span> Build Fast with AI <span class="dot"></span> <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-23-2026" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'White House accuses Moonshot of distilling Anthropics Fable model to build Kimi K3','https://www.buildfastwithai.com/blogs/ai-news-today-july-23-2026')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Watch the category boundary. “Skills captured from demonstration” is <b>procedural memory</b> by another name, and it lands right next to Kepler's turf — the difference is <i>where that memory lives and who owns it</i>. If skills are locked inside one vendor's product, that's the black-box pattern you're positioned against; a URL-first, portable, auditable store lets a demonstrated workflow move between models and tools and be inspected when it misfires. The roadmap lesson: memory isn't only facts to retrieve, it's procedures to replay — and “portable + auditable” beats “captured but trapped.”</p>
+          <p>Strip out the geopolitics and this is a <b>provenance</b> story — nobody can prove where a model's knowledge came from, so the argument runs on statistical tells. That is exactly the gap an auditable layer closes. Kepler's pitch is a <b>URL-addressable, timestamped record of what an agent knew and when</b> — provenance you can open, not infer from cross-entropy. As "where did this come from?" becomes a board-level question for models, it becomes one for agent memory too, and "you can audit ours" is a feature buyers will increasingly demand rather than admire.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -228,13 +228,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Interloom raises $16.5M to turn undocumented expertise into an agent “context graph”</h3>
-          <p><b>Interloom</b> raised a <b>$16.5M seed</b> (DN Capital, with Bek Ventures and Air Street Capital) to capture the “<b>70% of operational decisions never written down</b>” and convert them into a continuously-evolving <b>context graph</b> that grounds enterprise agents — already processing millions of cases for <b>Zurich Insurance</b> and Fiege. The investor line says it plainly: “an agent is only as good as the specific knowledge it can rely on.”</p>
-          <div class="src"><span class="badge b">Background · Mar 2026</span> <span class="dot"></span> Interloom <span class="dot"></span> <a href="https://interloom.com/en/blog/seed-announcement/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Interloom raises $16.5M to build an enterprise agent context graph','https://interloom.com/en/blog/seed-announcement/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">The agent-memory layer is now a crowded field — Mem0, Zep, Letta, Supermemory, Cognee and more</h3>
+          <p>The category has hardened into a recognised "memory layer", with at least ten contenders splitting along architecture: <b>Mem0</b> (vector + graph + KV), <b>Zep</b> (temporal/episodic), <b>Letta/MemGPT</b> (stateful editable blocks), <b>Supermemory</b> (lightweight semantic), <b>Cognee</b> (RAG-plus-graph pipeline), plus <b>MemOS, LangMem, MemMachine</b> and SQL-native <b>Memori</b>. No single winner — they compete on engine and developer adoption.</p>
+          <div class="src"><span class="badge b">Background · Feb 2026</span> <span class="dot"></span> Vectorize <span class="dot"></span> <a href="https://vectorize.io/articles/best-ai-agent-memory-systems" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'The agent-memory layer is now crowded, Mem0 Zep Letta Supermemory Cognee and more','https://vectorize.io/articles/best-ai-agent-memory-systems')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>A direct read on your category, and a useful contrast. Interloom builds the <b>corporate</b> context graph — org-owned institutional memory — which validates the thesis (agents are only as good as their context) while leaving your wedge intact: <b>user-owned, URL-first, auditable</b> memory a person or enterprise controls and can port, not a graph locked inside one platform. Named insurers tell you where the budget sits — regulated, process-heavy operations — and how these rounds get framed to investors: “permanent memory layer,” not “feature.” Borrow the framing; keep the ownership difference.</p>
+          <p>Your competitive map on one card — and the tell in it. Everyone is racing on the <i>engine</i> (vector vs graph vs SQL) and on GitHub stars; almost nobody leads on the axis you own: <b>who holds the memory, at what address, and can they audit it</b>. That's the wedge. Note the one adjacent claim — Memori's "SQL-native for enterprise compliance" — because auditability is the property most likely to be copied, so <b>URL-first ownership and portability</b> need to be the part that's hard to imitate. Don't out-star them; out-own them.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -242,13 +242,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Cognee raises $7.5M for an open-source memory layer — “agents without memory are toys”</h3>
-          <p><b>Cognee</b> raised a <b>$7.5M seed</b> (Pebblebed, led by an OpenAI co-founder, plus angels from DeepMind and n8n) for an <b>open-source memory layer</b> that fights how “AI agents forget everything between sessions.” Its <b>ECL</b> (Extract–Cognify–Load) pipeline ingests 38+ sources into a unified graph-plus-vector store; pipeline volume grew <b>500×</b> in 2025, with <b>70+ companies in production</b> and 12k+ GitHub stars.</p>
-          <div class="src"><span class="badge b">Background · Feb 2026</span> <span class="dot"></span> Cognee <span class="dot"></span> <a href="https://www.cognee.ai/blog/cognee-news/cognee-raises-seven-million-five-hundred-thousand-dollars-seed" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Cognee raises $7.5M for an open-source memory layer for AI agents','https://www.cognee.ai/blog/cognee-news/cognee-raises-seven-million-five-hundred-thousand-dollars-seed')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">Big platforms are bundling the context layer — OpenAI, Google, Meta and NVIDIA-ServiceNow all ship "agent context"</h3>
+          <p>Alongside OpenAI Presence, the enterprise agent market is consolidating into four bundles — <b>Google's Gemini Enterprise</b>, <b>Meta's Business Agent Platform</b> and the <b>NVIDIA-ServiceNow "Project Arc"</b> — each competing on <b>governance, permissions and company context</b> rather than model capability. The context/memory tier is being pulled inside the platforms.</p>
+          <div class="src"><span class="badge v">✓ Jul 2026</span> <span class="dot"></span> Build Fast with AI <span class="dot"></span> <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-23-2026" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Big platforms are bundling the agent context layer, OpenAI Google Meta and NVIDIA ServiceNow','https://www.buildfastwithai.com/blogs/ai-news-today-july-23-2026')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Your closest open-source comparable — and a clear benchmark for what “traction” looks like in agent memory right now: ~12k stars, 70+ production users, an OpenAI-co-founder cheque. Cognee competes on the graph/vector engine and developer adoption — the Mem0 playbook; the ground it doesn't claim is the one you want: <b>user ownership, URL-addressability, auditability</b>. Two takeaways for the raise: developer love plus a marquee angel is the shape investors reward here, and “open-source memory” is getting crowded — so lead with the property none of them lead on rather than trying to out-star them.</p>
+          <p>This is the structural threat and the structural opening at once. When four giants all decide "context and governance" is the battleground, the category is validated at the top of the market — but each wants that context to live in <i>their</i> platform. Kepler's counter is the thing none of them can offer without contradicting their model: memory the customer owns and can carry <b>between</b> platforms. In a four-way war, the neutral, portable layer is the Switzerland — valuable precisely because it isn't any one of them. Sell to the buyer who refuses to bet the company on a single vendor's box.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -261,13 +261,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Global VC hit $510B in H1 2026 — 70% to AI, and the money is chasing “plumbing”</h3>
-          <p>First-half venture funding reached <b>$510B</b>, with roughly <b>70% flowing to AI</b> — and increasingly to <b>infrastructure</b>: compute, data pipelines and reliability rather than model development itself. The phrase investors keep repeating is “<b>the plumbing of AI</b>,” the same control-layer thesis running through this year's biggest rounds.</p>
-          <div class="src"><span class="badge v">✓ 22 Jul 2026</span> <span class="dot"></span> Build Fast with AI <span class="dot"></span> <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Global VC hit $510B in H1 2026, 70% to AI and increasingly to infrastructure plumbing','https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">Australia's Firmus raises $505M at a $5.5B valuation for its Melbourne-and-Tasmania AI factories</h3>
+          <p><b>Firmus</b> — an Australian builder of high-density "AI factory" data centres — raised <b>$505M</b> (Coatue leading, with <b>Nvidia</b>) at a <b>$5.5B valuation</b>, its third equity raise in six months and $1.35B total, atop a $10B debt package. <b>Project Southgate</b> targets up to <b>1.6GW</b> across Melbourne and Tasmania, with an ASX IPO flagged; Tasmanian sites already hit a <b>1.03 PUE</b>.</p>
+          <div class="src"><span class="badge v">✓ Jul 2026</span> <span class="dot"></span> Ventureburn <span class="dot"></span> <a href="https://ventureburn.com/firmus-raises-505m-to-expand-ai-data-centre-infrastructure/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Australias Firmus raises 505M dollars at a 5.5B valuation for AI factory data centres','https://ventureburn.com/firmus-raises-505m-to-expand-ai-data-centre-infrastructure/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>The tailwind under your raise, quantified. When 70% of a $510B pool goes to AI and the marginal dollar is moving from models to plumbing, “<b>the memory tier of the agent stack</b>” is exactly the story getting funded — priced as infrastructure, not an app feature. Two calibration points: lead with reliability, control and data ownership (what the plumbing thesis rewards), and comp against <b>infra multiples</b>. The flip side is the risk — “plumbing” is where well-capitalised incumbents and open-source both crowd in, so the ownership/auditability wedge is what keeps you from being one more pipe.</p>
+          <p>The clearest local proof that AI-infrastructure capital is landing in Australia, at scale, right now — a useful anchor when you frame Kepler's own raise. It's the "plumbing" thesis in your backyard: the money is chasing the picks-and-shovels of AI, and "the memory tier of the agent stack" is the same shelf, one layer up from compute. Two calibration points: infra stories here can support <b>big numbers and marquee names</b> (Coatue, Nvidia), and the efficiency angle sells — Firmus led with a 1.03 PUE; you can lead with tokens-and-context saved per query.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -275,13 +275,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">SkyPilot raises $20M to orchestrate AI compute across clouds — the control layer keeps getting funded</h3>
-          <p><b>SkyPilot</b> (Lux Capital, <b>$20M</b>) builds <b>compute orchestration across hyperscalers</b> — 14M+ downloads — letting teams run training, inference and serving wherever it's cheapest. It sits alongside recent agent-payments and chip-inference rounds as another bet on <b>the control layer agents run on</b>, not another app.</p>
-          <div class="src"><span class="badge v">✓ 21 Jul 2026</span> <span class="dot"></span> Tech Startups <span class="dot"></span> <a href="https://techstartups.com/2026/07/21/venture-capital-startup-funding-roundup-july-21-2026-bosch-tiger-global-finsight-ventures-atreides-management-and-coinbase/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'SkyPilot raises $20M to orchestrate AI compute across clouds','https://techstartups.com/2026/07/21/venture-capital-startup-funding-roundup-july-21-2026-bosch-tiger-global-finsight-ventures-atreides-management-and-coinbase/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">Australian AI seeds keep landing — ESGAgent.ai ($725K) and other small early rounds</h3>
+          <p>The local early-stage tape stayed active: Brisbane's <b>ESGAgent.ai</b> raised a <b>$725K seed</b> (DNX Ventures) to automate climate, safety and governance reporting for heavy industry, cutting compliance from <b>months to hours</b>; Sydney's <b>New Energy Transport</b> took <b>$5M</b> for electric-freight infrastructure. Modest cheques, but a live read on Australian seed appetite.</p>
+          <div class="src"><span class="badge v">✓ Jul 2026</span> <span class="dot"></span> Dynamic Business <span class="dot"></span> <a href="https://dynamicbusiness.com/weekly-funding-roundup/five-fresh-raises-from-a-brisbane-compliance-startup-to-a-188b-ai-giant.html" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Australian AI seeds keep landing, ESGAgent.ai raises 725K and more','https://dynamicbusiness.com/weekly-funding-roundup/five-fresh-raises-from-a-brisbane-compliance-startup-to-a-188b-ai-giant.html')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Same shelf you want Kepler filed on. “Orchestrate compute across clouds” and “remember context across sessions” are the same category of bet — <b>portable, model-agnostic infrastructure</b> that sits under the agent and refuses to be locked to one provider. The $20M cheque and 14M downloads are a live benchmark for what open-source-plus-infra attracts, and the portability pitch is one you can borrow almost word for word: teams that won't marry one cloud won't marry one memory vendor either. Lead with vendor-agnostic, and comp to infra.</p>
+          <p>Ground-level benchmarks for exactly your stage and geography. The headline AI-infra rounds are useful for narrative, but a Brisbane AI seed at $725K tells you what Australian angels and micro-VCs are actually writing right now — the comparison set an early Kepler round gets measured against locally. The pattern also rewards a <b>sharp vertical wedge</b> and a concrete "hours not months" outcome; the analogue for Kepler is a crisp, provable claim (auditable, portable memory) over a broad "platform" pitch that early cheques rarely fund.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -294,13 +294,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">ASX trades near 8,800 as a gold rout hits miners and Lynas slumps 8%</h3>
-          <p>The S&amp;P/ASX 200 traded around the <b>8,800</b> mark on Wednesday as a broad bullion sell-off dragged gold miners lower and <b>Lynas Rare Earths slid ~8%</b> on Mt Weld processing issues; <b>Seek (-3.5%)</b> and Helia (-4.2%) also fell, while commodity names <b>Firefly Metals (+6%)</b>, Iperionx (+5.6%) and Capstone Copper (+4.9%) ran. Wall Street had snapped a three-day losing streak overnight as semiconductors rallied.</p>
-          <div class="src"><span class="badge v">✓ 22 Jul 2026</span> <span class="dot"></span> Market Index <span class="dot"></span> <a href="https://www.marketindex.com.au/news/asx-200-live-today-wednesday-22nd-july" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'ASX trades near 8,800 as a gold rout hits miners and Lynas slumps 8%','https://www.marketindex.com.au/news/asx-200-live-today-wednesday-22nd-july')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">ASX firms to 8,860 as a jobs shock revives RBA hike bets</h3>
+          <p>The S&amp;P/ASX 200 closed <b>+0.43% at 8,860</b> on Thursday, with <b>materials and energy</b> leading while tech lagged on weak US earnings — <b>WiseTech -6.4%</b>, <b>Life360 -5.4%</b> and <b>Seek -5.0%</b> fell, while <b>Paladin +12.8%</b> and gold names ran. June employment jumped <b>76,800</b> (vs 15,000 expected), lifting <b>11 August RBA hike odds to ~36%</b> and pushing the year-end cash-rate call to <b>4.60%</b>.</p>
+          <div class="src"><span class="badge v">✓ 23 Jul 2026</span> <span class="dot"></span> IG <span class="dot"></span> <a href="https://www.ig.com/en-ch/news-and-trade-ideas/asx-200-afternoon-report--23-july-2026-260723" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'ASX firms to 8860 as a jobs shock revives RBA rate hike bets','https://www.ig.com/en-ch/news-and-trade-ideas/asx-200-afternoon-report--23-july-2026-260723')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>The rotation is the signal. Money moving out of gold and into copper and base metals — plus a “risk-back-on” cue from an overnight semiconductor rally — says local capital is still trading commodities and macro, not paying up for growth stories. For a founder that reinforces the posture of recent weeks: an <b>efficiency-and-reliability</b> pitch travels better than growth-at-any-cost in a market this rotational. And the semis rally is the through-line to every AI-infra story in today's edition — the picks-and-shovels trade is where conviction sits.</p>
+          <p>The rate story just got more hawkish, and that shapes both your paths. A jobs blowout that revives hike bets means capital stays expensive and investors keep paying for efficiency over growth — which lifts the opportunity cost of the founder route and rewards Kepler's "do more with fewer tokens" pitch. It also punished exactly the names you'd benchmark against — <b>WiseTech and Seek</b>, local tech — a reminder the ASX still trades commodities and macro, not growth software. For the Alinta seat, higher-for-longer flatters a gas-and-firming gentailer's earnings.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -308,13 +308,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">The RBA is still boxed at 4.35% with a tightening bias live</h3>
-          <p>The cash rate sits at <b>4.35%</b> after the Monetary Policy Board's <b>16 June hold</b> — its first pause following three hikes this year — and the Board explicitly kept the door open to <i>raising</i> again, citing inflation that “picked up materially” and higher fuel and commodity prices. With oil still elevated, the fuel-price channel keeps the tightening bias alive even as housing softens.</p>
-          <div class="src"><span class="badge b">Background · 16 Jun 2026</span> <span class="dot"></span> Reserve Bank of Australia <span class="dot"></span> <a href="https://www.rba.gov.au/media-releases/2026/mr-26-15.html" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'RBA still boxed at 4.35% with a tightening bias live','https://www.rba.gov.au/media-releases/2026/mr-26-15.html')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">Brent near US$95 — oil up ~27% this month keeps the inflation channel hot</h3>
+          <p><b>Brent crude rose 4.2% to about US$95</b> on escalating US-Iran tensions, now <b>up ~27% for July</b> — lifting local energy names and hardening the RBA's inflation worry via the fuel-price channel. US markets wobbled (30-year Treasury yield above 5% for 27 straight sessions) even as <b>Alphabet lifted FY26 capex guidance to US$205B</b> on AI demand.</p>
+          <div class="src"><span class="badge v">✓ 23 Jul 2026</span> <span class="dot"></span> IG <span class="dot"></span> <a href="https://www.ig.com/en-ch/news-and-trade-ideas/asx-200-afternoon-report--23-july-2026-260723" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Brent near 95 dollars as oil up 27 percent this month keeps inflation hot','https://www.ig.com/en-ch/news-and-trade-ideas/asx-200-afternoon-report--23-july-2026-260723')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>This is the discount rate behind every choice you're weighing. With a tightening bias live and inflation risks tilted up, capital stays expensive and investors keep paying for efficiency over growth — which lifts the opportunity cost of the founder path and rewards the “do more with fewer tokens” story Kepler tells. It cuts the other way on the day job: an oil-and-inflation backdrop is bullish for a gas-and-firming gentailer's earnings, and higher-for-longer is precisely the macro a Head of Tech at Alinta would be optimising dispatch against. The rate that pressures your raise flatters the salaried seat.</p>
+          <p>One macro variable that pulls your two options in opposite directions. A sustained oil spike feeds headline inflation, keeps the RBA hawkish and makes venture capital pricier — a headwind for a raise. The same spike is a <i>tailwind</i> for a gas-weighted gentailer: firmer wholesale prices and a stronger case for the peakers and gas contracts Alinta is building. And Alphabet's jump to <b>US$205B</b> in capex is the through-line to every AI-infra story today — the picks-and-shovels supercycle Kepler's category rides on is still accelerating.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -327,13 +327,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">The GEO data is in: AI answers cite brand mentions, fresh pages and earned media — not backlinks</h3>
-          <p>New 2026 numbers harden what wins AI-answer visibility: <b>brand mentions correlate ~0.66</b> with AI-Overview citations vs <b>0.22 for backlinks</b>, <b>83% of AI-Overview citations</b> come from pages outside Google's top 10, and <b>76% of ChatGPT's most-cited pages</b> were updated in the last 30 days. Adding statistics to a page alone lifted visibility <b>41%</b> in the Princeton study. Old SEO barely moves the needle where a third of buyers now start.</p>
-          <div class="src"><span class="badge b">Analysis · 2026</span> <span class="dot"></span> Omnibound <span class="dot"></span> <a href="https://www.omnibound.ai/blog/generative-engine-optimization-statistics" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'GEO data: AI answers cite brand mentions, fresh pages and earned media, not backlinks','https://www.omnibound.ai/blog/generative-engine-optimization-statistics')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">The GEO data hardens: half of AI-cited pages are under 13 weeks old, and comparison content wins</h3>
+          <p>New 2026 figures sharpen what earns AI-answer visibility: <b>~50% of AI-cited content is under 13 weeks old</b>, <b>comparison articles pull 32.5%</b> of citations (the top content type), <b>63% of sites</b> now get traffic from AI search, and <b>58% of users</b> have replaced a traditional engine with an AI tool. The signal has shifted from backlinks to <b>entity authority and freshness</b>.</p>
+          <div class="src"><span class="badge b">Analysis · 2026</span> <span class="dot"></span> Digital Agency Network <span class="dot"></span> <a href="https://digitalagencynetwork.com/generative-engine-optimization-statistics/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'GEO data hardens, half of AI cited pages are under 13 weeks old and comparison content wins','https://digitalagencynetwork.com/generative-engine-optimization-statistics/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Actionable this week. If citations track brand mentions, freshness and earned media — not backlinks — then for an AI-memory startup the winning move is to be <b>quotable and current</b>: publish original stats about agent memory, get named in third-party pieces, keep pages fresh (76% of top ChatGPT citations were touched inside 30 days). It's also a dogfood loop — “what do the models say about agent-memory tools, and is Kepler cited?” is measurable and movable, and a live demo of the retrieval quality you sell. Feed the engines what they reward, then re-measure.</p>
+          <p>A concrete content plan for an AI-memory startup. If freshness and comparison content win the citation, then publish and keep updating a "<b>Kepler vs Mem0 vs Zep</b>"-style comparison, original stats about agent memory, and dated changelogs — the formats models actually quote. It doubles as a dogfood loop: ask the models "what are the best user-owned agent-memory tools?", measure whether Kepler is named, then move it. You sell retrieval quality; <b>being well-retrieved by the engines is the demo</b>.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -341,13 +341,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">AI-referred visitors convert ~9× better — and increasingly the visitor is an agent</h3>
-          <p>AI-referred traffic converts far above organic — <b>ChatGPT at 15.9%</b> and Perplexity at 10.5% versus <b>1.76% for organic search</b> (Seer) — even as <b>35% of US consumers</b> now start product discovery in an AI tool vs 13.6% in traditional search. And the “visitor” is shifting: as agents do the shortlisting, discoverability becomes “can a machine <b>find, parse and trust</b> you?”.</p>
-          <div class="src"><span class="badge b">Analysis · 2026</span> <span class="dot"></span> Omnibound <span class="dot"></span> <a href="https://www.omnibound.ai/blog/generative-engine-optimization-statistics" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'AI-referred visitors convert ~9x better than organic — and the visitor is increasingly an agent','https://www.omnibound.ai/blog/generative-engine-optimization-statistics')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <h3 class="fhead">AI-referred buyers convert better — and the buyer is increasingly an agent</h3>
+          <p>AI-sourced traffic keeps out-converting search: <b>7.05% from AI sessions vs 5.81% organic</b> (~31% higher), with <b>$262B</b> in AI/agent-influenced retail over the 2025 holidays and <b>693% YoY</b> growth in AI-driven retail traffic. As agents do the shortlisting, discoverability becomes "can a machine <b>find, parse and trust</b> you?"</p>
+          <div class="src"><span class="badge b">Analysis · 2026</span> <span class="dot"></span> Digital Agency Network <span class="dot"></span> <a href="https://digitalagencynetwork.com/generative-engine-optimization-statistics/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'AI referred buyers convert better and the buyer is increasingly an agent','https://digitalagencynetwork.com/generative-engine-optimization-statistics/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Go-to-market pointed straight at your category. If AI-sourced buyers convert ~9× better and agents are doing the shortlisting, the job is to be the memory layer an agent can <b>find, parse and verify</b> — machine-readable claims, an MCP endpoint that's trivial to discover, auditable proof of what the product does. Kepler is unusually well-placed: URL-first, inspectable memory is exactly what a machine reader can trust, and shipping via MCP puts you in the toolset agents already browse. Build docs and citations for the <b>machine reader</b> first; the human arrives after the agent has made the shortlist.</p>
+          <p>Go-to-market aimed straight at your category. If agents are doing the shortlisting and AI-referred buyers convert better, the job is to be the memory layer an agent can <b>find, parse and verify</b> — machine-readable claims, an MCP endpoint trivial to discover, auditable proof of what the product does. Kepler is unusually well-placed: URL-first, inspectable memory is precisely what a machine reader can trust, and shipping via MCP puts you in the toolset agents already browse. Write the docs for the <b>machine reader</b> first; the human shows up after the agent has made the list.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -360,13 +360,27 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Chevron signs a new five-year WA gas deal with Alinta — 46 PJ from 2027</h3>
-          <p>Chevron will supply <b>Alinta with 46 petajoules</b> of WA gas over five years <b>from July 2027</b>, sourced from its <b>Wheatstone, Gorgon and North West Shelf</b> portfolio — extending a relationship that ran 20 PJ/year from 2020. Alinta is building a <b>400MW gas-fired power station</b> in WA due to start up in <b>late 2028</b>, and the deal underpins its western fuel supply.</p>
+          <h3 class="fhead">AEMO pushes the gas-shortfall warning out to 2030 as a 30GW battery pipeline bites</h3>
+          <p>AEMO's 2026 Gas Statement of Opportunities moved the forecast southern-states supply gap from <b>2029 to 2030</b>, citing <b>~30GW of battery storage</b> in the NEM pipeline and accelerating electrification trimming demand. Gas-for-power stays near current levels but turns <b>"peakier and seasonal"</b> — needed less often, but harder, at the peaks.</p>
+          <div class="src"><span class="badge b">Background · 2026</span> <span class="dot"></span> RenewEconomy <span class="dot"></span> <a href="https://reneweconomy.com.au/gas-shortage-warnings-pushed-out-again-as-big-battery-boom-and-electrification-take-fresh-bite-from-demand/" onclick="return openLink(this)">Source ↗</a></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'AEMO pushes gas shortfall warning out to 2030 as a 30GW battery boom bites','https://reneweconomy.com.au/gas-shortage-warnings-pushed-out-again-as-big-battery-boom-and-electrification-take-fresh-bite-from-demand/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+        </div></div>
+        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
+          <p>The precise shape of the market the Alinta seat would operate in. "Peakier and seasonal" gas demand is the bull case for the firming assets Alinta is building — peakers and batteries earn their keep in the spikes, not the baseload — but the 30GW battery wave is the competitive pressure squeezing gas out of the middle of the curve. A Head of Tech's core problem is exactly this: optimise contracted gas and battery dispatch against a demand curve flattening on average and sharpening at the edges. For Kepler the read is only structural — this is a dense, high-frequency dispatch-optimisation domain, the kind serious agent tooling is built to feed on.</p>
+          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
+        </div>
+      </div>
+    </article>
+    <article class="flip">
+      <div class="flip-inner">
+        <div class="face front"><div class="cbody">
+          <h3 class="fhead">Chevron's new 46 PJ five-year WA gas deal underpins Alinta's WA firming build</h3>
+          <p><b>Chevron</b> will supply <b>Alinta with 46 petajoules</b> of WA gas over five years <b>from July 2027</b>, sourced from Wheatstone, Gorgon and the North West Shelf — extending a supply relationship as Alinta builds a <b>400MW gas-fired peaker</b> in WA due <b>late 2028</b>.</p>
           <div class="src"><span class="badge b">Background · 10 Jul 2026</span> <span class="dot"></span> Argus Media <span class="dot"></span> <a href="https://www.argusmedia.com/en/news-and-insights/latest-market-news/2850453-chevron-australia-s-alinta-sign-five-year-gas-deal" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Chevron signs a new 46 PJ five-year WA gas deal with Alinta from 2027','https://www.argusmedia.com/en/news-and-insights/latest-market-news/2850453-chevron-australia-s-alinta-sign-five-year-gas-deal')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Chevron signs a new 46 PJ five year WA gas deal with Alinta from 2027','https://www.argusmedia.com/en/news-and-insights/latest-market-news/2850453-chevron-australia-s-alinta-sign-five-year-gas-deal')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>The most concrete Alinta operational news on the board, and it sharpens what the seat is really about. Locking five years of gas from 2027 to feed a new <b>400MW WA peaker</b> is exactly the long-horizon supply-and-dispatch bet a Head of Tech would help model — matching contracted fuel against a volatile wholesale curve and a firming fleet. It also confirms the strategic logic under Sembcorp: Alinta is <i>investing into</i> WA gas-fired firming, not retreating from it — a build-phase mandate, not caretaker mode. For Kepler, only the pattern matters: a retailer coordinating fuel contracts, a new plant and battery dispatch throws off precisely the time-stamped operational data serious agent tooling feeds on.</p>
+          <p>The most concrete Alinta operational bet on the board, and it tells you what the seat is really about. Locking five years of gas to feed a new <b>400MW WA peaker</b> is exactly the long-horizon supply-and-dispatch modelling a Head of Tech would own — matching contracted fuel against a volatile wholesale curve and the firming fleet. It also confirms the strategy under Sembcorp: Alinta is <i>investing into</i> WA gas firming, a build-phase mandate rather than caretaker mode.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -374,27 +388,13 @@
     <article class="flip">
       <div class="flip-inner">
         <div class="face front"><div class="cbody">
-          <h3 class="fhead">Transgrid shortlists 2GW of grid batteries to replace coal's “system strength” in NSW</h3>
-          <p><b>Transgrid</b> shortlisted <b>nine third-party battery projects totalling up to 2GW</b> — <b>grid-forming</b> systems that provide system-strength services (voltage and frequency control) as NSW retires ~80% of its coal over the next decade, the first phase of a <b>5GW-by-2033</b> plan. The logic: batteries can strengthen the grid without buying expensive new network plant.</p>
-          <div class="src"><span class="badge b">Background · Mar 2026</span> <span class="dot"></span> Energy-Storage.News <span class="dot"></span> <a href="https://www.energy-storage.news/australias-transgrid-shortlists-2gw-of-grid-battery-storage-to-replace-coals-system-strength-in-nsw/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Transgrid shortlists 2GW of grid-forming batteries to replace coal system strength in NSW','https://www.energy-storage.news/australias-transgrid-shortlists-2gw-of-grid-battery-storage-to-replace-coals-system-strength-in-nsw/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
-        </div></div>
-        <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>The demand signal behind Alinta's storage build. When the grid operator is contracting gigawatts of third-party, grid-forming batteries just to keep the lights stable through the coal exit, owning firming assets — <b>Wagerup, Reeves Plains</b> — sits on the right side of a structural, policy-driven need, not a green nice-to-have. And “grid-forming” is the technical frontier: these batteries actively <i>set</i> voltage and frequency, a real-time control problem that is squarely technology-leadership scope — the kind of optimisation the Alinta seat would own. For Kepler the read is structural only: system-strength batteries throw off dense, high-frequency operational telemetry — the substrate agent tooling runs on.</p>
-          <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
-        </div>
-      </div>
-    </article>
-    <article class="flip">
-      <div class="flip-inner">
-        <div class="face front"><div class="cbody">
-          <h3 class="fhead">The backdrop: Sembcorp now owns Alinta, with a 10.4GW pipeline to build</h3>
-          <p>The standing fact behind the seat: Singapore's <b>Sembcorp</b> has completed its <b>A$6.5B (US$4.32B)</b> acquisition of Alinta, adding <b>3.4GW of operating generation</b> and a <b>10.4GW development pipeline</b> — SA's <b>Reeves Plains</b> BESS, WA's <b>Wagerup</b> battery and NSW's <b>Oven Mountain</b> pumped hydro among them. FIRB and the ACCC cleared it; <b>Jeff Dimery and the management team stay on</b>, now backed by a state-linked utility with deep capital.</p>
+          <h3 class="fhead">The backdrop: Sembcorp owns Alinta, with a 10.4GW pipeline to build and management intact</h3>
+          <p>The standing fact behind the seat: Singapore's <b>Sembcorp</b> completed its <b>A$6.5B</b> Alinta acquisition, adding <b>3.4GW</b> of operating generation and a <b>10.4GW</b> development pipeline — SA's <b>Reeves Plains</b> BESS, WA's <b>Wagerup</b> battery and NSW's <b>Oven Mountain</b> pumped hydro among them. <b>Jeff Dimery and the team stay on</b>, now backed by deep state-linked capital.</p>
           <div class="src"><span class="badge b">Background · Jun 2026</span> <span class="dot"></span> Energy-Storage.News <span class="dot"></span> <a href="https://www.energy-storage.news/sembcorp-completes-us4-32-billion-acquisition-of-alinta-energy-adds-10-4gw-australian-pipeline/" onclick="return openLink(this)">Source ↗</a></div>
-          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Sembcorp completes A$6.5B Alinta acquisition, inheriting a 10.4GW pipeline','https://www.energy-storage.news/sembcorp-completes-us4-32-billion-acquisition-of-alinta-energy-adds-10-4gw-australian-pipeline/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
+          <div class="actions"><span class="lbl">Tune:</span><button class="up" onclick="tog(event,this)">👍</button><button class="down" onclick="tog(event,this)">👎</button><button class="share" onclick="share(event,'Sembcorp completes A dollar 6.5B Alinta acquisition inheriting a 10.4GW pipeline','https://www.energy-storage.news/sembcorp-completes-us4-32-billion-acquisition-of-alinta-energy-adds-10-4gw-australian-pipeline/')">Share ↗</button><button class="why" onclick="flip(event,this)">Why ⟳</button></div>
         </div></div>
         <div class="face back"><div class="whytag">Why it matters — for you, Jacko</div>
-          <p>Held here as the anchor fact for every Alinta decision: ownership is settled, management intact, and the parent is a well-capitalised Singapore utility at the <i>start</i> of a 10.4GW build — resourcing and mandate, not survival mode. Paired with today's Chevron gas deal and the Transgrid battery signal, the picture sharpens: Alinta is buying long-dated fuel <i>and</i> the market is paying up for firming, so a Head of Tech would be handed real optimisation scope across exactly the assets in that pipeline. The counterweight for Kepler is unchanged — a parent this well-funded will happily build internal tooling, so a portable memory layer has to beat “roll our own,” which is precisely the infra-layer bet running through today's funding section.</p>
+          <p>The anchor fact for every Alinta call: ownership settled, management intact, parent well-capitalised and at the <i>start</i> of a 10.4GW build — mandate and resourcing, not survival. Paired with the Chevron gas deal and AEMO's "peakier" gas outlook, the picture is a gentailer buying long-dated fuel and building firming into a market paying for exactly that. The counterweight for Kepler is unchanged: a parent this well-funded can build internal tooling, so a portable memory layer has to beat "roll our own" — the same infra-layer bet running through today's funding section.</p>
           <button class="backbtn" onclick="unflip(event,this)">↩ Back</button>
         </div>
       </div>
@@ -404,12 +404,12 @@
   <!-- ===================== QUICK HITS ===================== -->
   <div class="sec-title">Quick Hits</div>
   <ul class="hits">
-    <li><span class="tag">AI · 21 Jul</span><span><b>Google ships three Gemini Flash models</b> (3.6 Flash, 3.5 Flash-Lite, restricted Flash Cyber), <b>slips Pro again</b>, and starts its “most ambitious” <b>Gemini 4</b> pretraining run. <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Agents · 21 Jul</span><span><b>Block launches Buzz</b>, an open-source Nostr workspace treating agents as first-class collaborators; <b>Claude Cowork</b> turns screen recordings into reusable skills. <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Memory · Feb–Mar</span><span>Agent-memory cheques keep landing: <b>Interloom $16.5M</b> (enterprise context graph) and <b>Cognee $7.5M</b> (open-source memory) — “agents without memory are toys.” <a href="https://www.cognee.ai/blog/cognee-news/cognee-raises-seven-million-five-hundred-thousand-dollars-seed" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Funding · 21–22 Jul</span><span>Global VC hit <b>$510B</b> in H1 (~70% AI, chasing infra “plumbing”); <b>SkyPilot $20M</b> for cross-cloud compute orchestration. <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Markets · 22 Jul</span><span><b>ASX near 8,800</b> as a gold rout hits miners and <b>Lynas -8%</b> on Mt Weld issues; commodity names run, RBA still <b>4.35%</b>. <a href="https://www.marketindex.com.au/news/asx-200-live-today-wednesday-22nd-july" onclick="return openLink(this)">↗</a></span></li>
-    <li><span class="tag">Energy · Jul</span><span><b>Chevron</b> signs a new <b>46 PJ</b> five-year WA gas deal with <b>Alinta</b> (from 2027); <b>Transgrid</b> shortlists <b>2GW</b> of grid-forming batteries for NSW. <a href="https://www.argusmedia.com/en/news-and-insights/latest-market-news/2850453-chevron-australia-s-alinta-sign-five-year-gas-deal" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">AI · 22 Jul</span><span><b>OpenAI ships Presence</b>, an enterprise agent platform built on shared company context, permissions and guardrails — opening a four-way platform war with Google, Meta and NVIDIA-ServiceNow. <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-23-2026" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Models · 23 Jul</span><span><b>DeepSeek V4</b> lands near <b>$0.44/M</b> output and <b>Kimi K3</b> opens its weights 27 Jul — even as the White House accuses <b>Moonshot</b> of distilling Anthropic's Fable. <a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-23-2026" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Memory · 2026</span><span>Agent-memory is now a crowded layer — <b>Mem0, Zep, Letta, Supermemory, Cognee, MemOS</b> — competing on engine, not ownership or auditability. <a href="https://vectorize.io/articles/best-ai-agent-memory-systems" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Funding · Jul</span><span><b>Firmus</b> raises <b>$505M</b> at $5.5B (Coatue, Nvidia) for Melbourne-Tasmania AI factories; Australian AI seeds (ESGAgent.ai $725K) keep landing. <a href="https://ventureburn.com/firmus-raises-505m-to-expand-ai-data-centre-infrastructure/" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Markets · 23 Jul</span><span><b>ASX +0.43% to 8,860</b> on a jobs shock (+76,800) that lifted <b>RBA hike odds to ~36%</b>; <b>Brent near US$95</b>, up ~27% in July. <a href="https://www.ig.com/en-ch/news-and-trade-ideas/asx-200-afternoon-report--23-july-2026-260723" onclick="return openLink(this)">↗</a></span></li>
+    <li><span class="tag">Energy · 2026</span><span><b>AEMO</b> pushes the gas shortfall to <b>2030</b> as a <b>30GW</b> battery pipeline bites; <b>Chevron's 46 PJ</b> deal underpins Alinta's WA peaker. <a href="https://reneweconomy.com.au/gas-shortage-warnings-pushed-out-again-as-big-battery-boom-and-electrification-take-fresh-bite-from-demand/" onclick="return openLink(this)">↗</a></span></li>
   </ul>
 
   <div class="foot">
@@ -417,7 +417,7 @@
     <p>Every story is cited with its real publication date, verified at the source. Items older than about a week are dropped or clearly marked <b>Background</b> — never dressed up as today's news.</p>
   </div>
 
-  <div class="stamp">The Daily Dispatch · Thursday 23 July 2026</div>
+  <div class="stamp">The Daily Dispatch · Friday 24 July 2026</div>
 
 </div>
 <div id="toast">Link copied</div>
