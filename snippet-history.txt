@@ -17,3 +17,4 @@ Episodic vs semantic memory (in agents)
 Reciprocal Rank Fusion (RRF)
 Semantic caching (answer reuse by embedding similarity)
 GraphRAG (entity-graph retrieval)
+Corrective RAG (CRAG) — retrieval evaluator grades docs before generation
