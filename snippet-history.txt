@@ -19,3 +19,4 @@ Semantic caching (answer reuse by embedding similarity)
 GraphRAG (entity-graph retrieval)
 Corrective RAG (CRAG) — retrieval evaluator grades docs before generation
 Maximal Marginal Relevance (MMR) for diverse retrieval
+Learned sparse retrieval (SPLADE)
