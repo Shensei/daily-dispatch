@@ -21,3 +21,4 @@ Corrective RAG (CRAG) — retrieval evaluator grades docs before generation
 Maximal Marginal Relevance (MMR) for diverse retrieval
 Learned sparse retrieval (SPLADE)
 Semantic chunking (embedding-based document splitting)
+Parent-document retrieval (small-to-big)
