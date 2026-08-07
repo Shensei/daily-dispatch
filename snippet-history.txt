@@ -28,3 +28,4 @@ Reflection / memory consolidation (agents distilling raw logs into durable memor
 RAPTOR (recursive summary-tree retrieval)
 Retrieval provenance / attributed generation (citations traced to source)
 Memory poisoning (adversarial writes into agent memory)
+Cache-Augmented Generation (CAG) — preload instead of retrieve
